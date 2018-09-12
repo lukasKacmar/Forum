@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>User</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link rel="stylesheet" href="/css/stylesheet.css" />
+</head>
+<body>
+
+	
+	<div>
+		<form action="/registermember" method="post">
+			<table>
+				<tr>
+					<td colspan = "2"><label><b>Register</b> a new GameStudio account</label></td>
+				</tr>
+			
+				<tr>
+					<td><label>Username</label></td>
+					<td><input type="text" name="username" required="required" /></td>
+				</tr>
+				<tr>
+					<td><label>Password</label></td>
+					<td><input type="password" name="password" required="required" /></td>
+				</tr>
+				<tr>
+					<td><label>Email</label></td>
+					<td><input type="text" name="email" required="required" /></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center"><input type="submit"
+						value="Register" /></td>
+				</tr>
+				<tr>
+					<td colspan="2">Already a member? <a style="text-decoration: underline;" href="loginmember">Log in to your account!</a></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+	<div id = "content">
+	<a class="white" href="/">Back to HomePage</a>
+	</div>
+	
+</body>
+</html>

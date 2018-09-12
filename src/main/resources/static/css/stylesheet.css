@@ -1,0 +1,363 @@
+/**
+ * Copyright (c) 2014 Oracle and/or its affiliates. All rights reserved.
+ *
+ * You may not modify, use, reproduce, or distribute this software except in
+ * compliance with  the terms of the License at:
+ * http://java.net/projects/javaeetutorial/pages/BerkeleyLicense
+ */
+#top {
+	position: relative;
+	background-color: #036fab;
+	color: white;
+	padding: 5px;
+	margin: 0px 0px 10px 0px;
+}
+
+body {
+	background-color: #ffffff;
+	background: url("../images/background.jpg") no-repeat center center
+		fixed;
+	background-size: cover;
+	font-size: 12px;
+	font-family: Verdana, "Verdana CE", Arial, "Arial CE", "Helvetica CE",
+		sans-serif;
+	color: #000000;
+	margin: 10px;
+}
+
+h1 {
+	font-family: Arial, "Arial CE", "Helvetica CE", sans-serif;
+	font-size: 56px;
+	font-weight: bold;
+	color: white;
+	margin: 0px;
+	padding: 0px;
+	color: white;
+}
+
+h2 {
+	font-family: Arial, "Arial CE", "Helvetica CE", sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+	margin: 0px;
+	padding: 0px;
+	color: black;
+}
+
+h3 {
+	font-family: Verdana, "Arial CE", "Helvetica CE", sans-serif;
+	font-size: 30px;
+	font-weight: bold;
+	background-color: #2CE0DD;
+	border-radius: 0.5rem;
+	padding: 10px;
+	width:160px;
+}
+
+h4 {
+	font-family: Verdana, "Arial CE", "Helvetica CE", sans-serif;
+	font-size: 20px;
+	font-weight: bold;
+	color: white;
+}
+
+a:link, a:visited {
+	color: black;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+a:link:hover, a:visited:hover {
+	font-weight: bold;
+	text-decoration: none;
+}
+
+a.white {
+	color: white;
+	text-decoration: underline;
+}
+
+a.whiteplain {
+	color: white;
+}
+
+.center_content {
+	position: relative;
+	background-color: #e0e0e0;
+	padding: 5px;
+}
+
+.error-message {
+	color: #d20005;
+	font-family: 'New Century Schoolbook', serif;
+	font-style: oblique;
+	text-decoration: overline;
+}
+
+.list-background {
+	background-color: #ffffff;
+	font-family: sans-serif;
+	font-size: 12pt;
+	padding: 10px;
+	width: 100%;
+}
+
+.list-caption {
+	font-family: sans-serif;
+	font-size: 12pt;
+	font-weight: bold;
+	padding: 5px;
+	text-align: center;
+}
+
+.list-column-center {
+	text-align: center;
+	width: 15%;
+}
+
+.list-column-left {
+	text-align: left;
+	width: 70%;
+}
+
+.list-column-right {
+	text-align: right;
+	width: 15%;
+}
+
+.list-footer {
+	background-color: #A5A5A5;
+	color: #000000;
+	font-weight: bold;
+	text-align: center;
+}
+
+.list-header {
+	background-color: #ffffff;
+	color: #000000;
+	text-align: center;
+}
+
+.list-row-even {
+	
+}
+
+.list-row-odd {
+	background-color: #eaf1f8;
+}
+
+.special-offer {
+	font-family: sans-serif;
+	font-size: 12pt;
+	text-align: left;
+	padding: 10px;
+}
+
+.mines_field {
+	border-collapse: collapse;
+	border: none;
+}
+
+.mines_field td {
+	padding: 0;
+	border: none;
+}
+
+.puzzle_field {
+	font-size: 30pt;
+	border: 1px;
+	padding: 10;
+	table-layout: fixed;
+}
+
+.puzzle_field td {
+	padding: 5px;
+	width: 60px;
+	border-style: solid;
+	border-color: black;
+	border-width: 5px;
+	text-align: center;
+}
+
+.pexeso_field {
+	font-size: 30pt;
+	border: 1px;
+	padding: 10;
+	table-layout: fixed;
+}
+
+.pexeso_field td {
+	padding: 5px;
+	width: 130px;
+	height: 120px;
+	border-color: black;
+	border-width: 5px;
+	text-align: center;
+}
+
+.mastermind_field {
+	font-size: 15pt;
+	border: 1px;
+	border-style: solid;
+	padding: 0;
+	table-layout: fixed;
+}
+
+.mastermind_field td {
+	padding: 3px;
+	width: 30px;
+	height: 36px;
+	border-color: black;
+	border-style: hidden;
+	border-width: 5px;
+	text-align: center;
+}
+
+.half_table {
+	font-size: 12pt;
+	border: 1px;
+	padding: 10;
+	table-layout: fixed;
+}
+
+.half_table td {
+	border: 1px;
+	border-style: solid;
+}
+
+.half_table tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+
+span.button {
+	font-family: Verdana, "Arial CE", "Helvetica CE", sans-serif;
+	font-size: 30px;
+	font-weight: bold;
+	border: 1px;
+	border-style: solid;
+	background-color: #2CE0DD;
+	border-radius: 0.5rem;
+	padding: 5px;
+}
+
+span.button2 {
+	font-family: Verdana, "Arial CE", "Helvetica CE", sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+	border: 1px;
+	border-style: solid;
+	background-color: #825B1F;
+	border-radius: 1rem;
+	padding: 5px;
+}
+
+textarea {
+	width: 100%;
+	height: 150px;
+	padding: 12px 20px;
+	box-sizing: border-box;
+	border: 2px solid #ccc;
+	border-radius: 4px;
+	background-color: #f8f8f8;
+	resize: none;
+}
+
+table {
+	margin: auto;
+	text-align: center;
+	border-collapse: collapse;
+	border: 1px solid #d4d4d4;
+	font-size: 10;
+	background: #fff;
+}
+
+table.header {
+	background-color: rgba(0, 0, 0, 0.3);
+	width: 100%;
+}
+
+table.transparent {
+	background-color: rgba(0, 0, 0, 0.3);
+	width: 100%;
+}
+table.footer {
+	background-color: rgba(0, 0, 0, 0.3);
+	width: 12%;
+}
+
+table.game {
+	border-color: black;
+	border-width: 8px;
+	border-style: double;
+}
+
+table.commentBig {
+	border-color: black;
+	border-width: 8px;
+	border-style: double;
+	border-bottom-width: 2px;
+	border-bottom-style: hidden;
+}
+
+table.comment {
+	border-color: black;
+	border-width: 2px;
+	border-top-style: hidden;
+	border-left-style: hidden;
+	border-right-style: hidden;
+	border-bottom-style: dashed;
+	
+}
+
+td.mastermind {
+	padding: 5px 5px;
+}
+
+table th, table td {
+	padding: 10px 30px;
+}
+
+table th {
+	border-bottom: 1px solid #d4d4d4;
+}
+
+#content, .content {
+	min-width: 212px;
+	margin: 0 8%;
+	margin-top: 10px;
+	display: block;
+	width: auto;
+	padding-top: 20px;
+	padding-right: 40px;
+	padding-left: 40px;
+	padding-bottom: 20px;
+	text-align: center;
+	color: white;
+}
+
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+ 
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}

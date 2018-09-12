@@ -1,0 +1,350 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="header">
+	<table class="header">
+		<tr>
+			<td style="text-align: left; color: white;">Welcome to <a
+				class="white" href="/"> GAMESTUDIO</a>.
+			</td>
+			<td style="text-align: right; color: white;"><span> <a
+					class="white" href="/login" th:unless="${@userController.logged}">
+						Login</a> <span th:unless="${@userController.logged}">or</span> <a
+					class="white" href="/register"
+					th:unless="${@userController.logged}"> Register</a>
+			</span> <span th:if="${@userController.logged}"> You are logged as <a class="white"
+					href="/profile"
+					th:text="${@userController.loggedUsername}"></a> <a
+					class="white" href="/logout">LOGOUT</a>
+			</span></td>
+		</tr>
+	</table>
+	<hr />
+</div>
+
+<div th:fragment="score(gameName)">
+
+	<table class="half_table">
+		<tr>
+			<td colspan="2"><b>Hall of Fame</b></td>
+		</tr>
+
+		<tr>
+			<td><b>Player</b></td>
+			<td><b>Points</b></td>
+		</tr>
+
+		<tr th:each="score: ${@scoreService.getBestScores(gameName)}">
+			<!-- must be whole name, because of parameter -->
+			<td th:text="${score.username}" />
+			<td th:text="${score.points}" />
+		</tr>
+	</table>
+
+</div>
+
+
+<div th:fragment="comment(gameName)">
+	<h2 style="color: white;" class="content">Comments:</h2>
+	<table class="commentBig" style="width: 40%; table-layout: fixed;">
+		<tr>
+			<td style="padding: 0px;">
+
+				<table class="comment" style="width: 100%; table-layout: fixed;"
+					th:each="comment: ${@commentService.getComments(gameName)}">
+					<tr>
+						<td style="width: 45%;"><span
+							style="text-decoration: underline; font-size: medium;"
+							th:text="${comment.username}"></span></td>
+						<td style="width: 45%;"><span style="font-size: medium;"
+							th:text="${#dates.format(comment.added, 'dd-MM-yyyy HH:mm:ss')}"></span></td>
+					</tr>
+					<tr>
+						<td style="width: 100%;" align="left" colspan="2"
+							th:text="${comment.comm}"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</div>
+
+
+<div th:fragment="commentsOfUser(userName)">
+	<h2 style="color: white;" class="content">Comments:</h2>
+	<table class="commentBig" style="width: 40%; table-layout: fixed;">
+		<tr>
+			<td style="padding: 0px;">
+
+				<table class="comment" style="width: 100%; table-layout: fixed;"
+					th:each="comment: ${@commentService.getCommentsOfUser(userName)}">
+					<tr>
+						<td style="width: 30%;"><span
+							style="text-decoration: underline; font-size: medium;"
+							th:text="${comment.username}"></span></td>
+						<td style="width: 30%;"><span>commented in game: </span><span
+							style="font-size: medium;" th:text="${comment.game}"></span></td>
+						<td style="width: 30%;"><span style="font-size: medium;"
+							th:text="${#dates.format(comment.added, 'dd-MM-yyyy HH:mm:ss')}"></span></td>
+						<td style="width: 10%;"><a class="tooltip"
+							th:href='${"/deletecomment?id="+comment.id}'>X  <span class="tooltiptext">DELETE COMMENT</span></a></td>
+					</tr>
+					<tr>
+						<td style="width: 100%;" align="left" colspan="4"
+							th:text="${comment.comm}"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</div>
+
+
+<div th:fragment="commentNew(gameName)">
+
+	<h2 style="color: white;" class="content">Comments:</h2>
+	<table>
+		<tr>
+			<td>
+				<div class="comment"
+					th:each="comment: ${@commentService.getComments(gameName)}">
+					<div>
+						<span><span style="text-decoration: underline;"
+							th:text="${comment.username}"></span></span> <span
+							th:text="${#dates.format(comment.added, 'dd-MM-yyyy HH:mm:ss')}"></span>
+					</div>
+					<div>
+						<span th:text="${comment.comm}"></span>
+					</div>
+					<br />
+
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>
+
+
+<div th:fragment="addcomment(gameName)">
+	<h2 style="color: white;" class="content">Add Comment</h2>
+	<form action="/addcomment" method="post">
+		<!-- method post - NOT show password in URL -->
+		<input type="hidden" name="game" th:value="${gameName}" />
+		<table class="game">
+
+			<tr>
+				<td colspan="2"><textarea name="comm"
+						placeholder="eg. Cool Game"></textarea></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center"><input type="submit"
+					value="Add Comment" /></td>
+			</tr>
+			<tr th:if="${commentMessage}">
+				<td colspan="2" align="center">
+					<div th:text="${commentMessage}" class="error-message">Message</div>
+				</td>
+			</tr>
+		</table>
+	</form>
+
+</div>
+
+<div th:fragment="addrating(gameName)">
+	<h2 th:if="${@userController.logged}">Rate this game!</h2>
+	<form action="/addrating" method="post">
+		<!-- method post - NOT show password in URL -->
+		<input type="hidden" name="game" th:value="${gameName}" />
+		<table style="border: hidden;">
+			<tr th:if="${@userController.logged}">
+				<td><label>Perfect!</label> <input type="radio" name="rating"
+					value="5" /> <input type="radio" name="rating" value="4" /> <input
+					type="radio" name="rating" value="3" /> <input type="radio"
+					name="rating" value="2" /> <input type="radio" name="rating"
+					value="1" /> <label>Poor</label></td>
+			</tr>
+
+			<tr th:if="${@userController.logged}">
+				<td align="center"><input type="submit" value="Add Rating" />
+				</td>
+			</tr>
+			<tr>
+				<td>Average rating of this game: <span
+					th:text="${@ratingController.avg(gameName)}"> </span>
+				</td>
+			</tr>
+		</table>
+	</form>
+
+</div>
+
+<span th:fragment="getAvg(gameName)"> <span
+	th:text="${@ratingController.avg(gameName)}"> </span>
+</span>
+
+<div th:fragment="getrating(gameName)">
+
+	<table class="half_table">
+		<tr>
+			<td colspan="2"><b>RATINGS</b></td>
+		</tr>
+
+		<tr th:each="rating: ${@ratingService.getRatings(gameName)}">
+			<!-- must be whole name, because of parameter -->
+			<td th:text="${rating.username}" />
+			<td th:text="${rating.rating}" />
+		</tr>
+	</table>
+	<hr />
+</div>
+
+<div th:fragment="footer">
+	<table class="footer">
+		<tr>
+			<td style="text-align: center; color: white;font-size: x-small;">Created by Lukas
+				Kacmar</td>
+		</tr>
+	</table>
+</div>
+
+<div th:fragment="sections">
+	<h2 style="color: white;" class="content">Sections:</h2>
+	<table class="commentBig" style="width: 40%; table-layout: fixed;">
+		<tr>
+			<td style="padding: 0px;">
+
+				<table class="comment" style="width: 100%; table-layout: fixed;"
+					   th:each="section: ${@ss.getSections()}">
+					<tr>
+						<td style="width: 45%;"><a th:href='${"/section?id="+section.id}'><span
+								style="text-decoration: underline; font-size: medium;"
+								th:text="${section.name}"></span></a></td>
+						<td style="width: 45%;"><span style="font-size: medium;"
+						th:text="${section.getMember().getUsername()}"></span></td>
+					</tr>
+					<tr>
+						<td style="width: 100%;" align="left" colspan="1"
+							th:text="${section.description}"></td>
+						<td>
+							<span th:text="${@ts.getCount(section)}"> </span>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div th:fragment="topics">
+	<h2 style="color: white;" class="content">Topics:</h2>
+	<table class="commentBig" style="width: 40%; table-layout: fixed;">
+		<tr>
+			<td style="padding: 0px;">
+
+				<table class="comment" style="width: 100%; table-layout: fixed;"
+					   th:each="topic: ${@ts.getTopics(@sectionController.getCurrentSection())}">
+					<tr>
+						<td style="width: 45%;"><a th:href='${"/topic?id="+topic.id}'><span
+								style="text-decoration: underline; font-size: medium;"
+								th:text="${topic.title}"></span></a></td>
+						<td style="width: 45%;"><span style="font-size: medium;"
+													  th:text="${topic.getMember().getUsername()}"></span></td>
+					</tr>
+					<tr>
+						<td style="width: 100%;" align="left" colspan="2"
+							th:text="${topic.content}"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div th:fragment="posts">
+	<h2 style="color: white;" class="content">Posts:</h2>
+	<table class="commentBig" style="width: 40%; table-layout: fixed;">
+		<tr>
+			<td style="padding: 0px;">
+
+				<table class="comment" style="width: 100%; table-layout: fixed;"
+					   th:each="post: ${@ps.getPosts(@topicController.getCurrentTopic())}">
+					<tr>
+						<td></td>
+						<td style="width: 45%;"><span style="font-size: medium;"
+													  th:text="${post.getMember().getUsername()}"></span></td>
+					</tr>
+					<tr>
+						<td style="width: 100%;" align="left" colspan="2"
+							th:text="${post.content}"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div th:fragment="addsection">
+	<form action="/addsection" method="post"> <!-- method post - NOT show password in URL -->
+		<table>
+			<tr>
+				<td colspan="2"><label><b>ADD SECTION</b></label></td>
+			</tr>
+			<tr>
+				<td><label>Name:</label></td>
+				<td><input type="text" name="name" required="required"/></td>
+			</tr>
+			<tr>
+				<td><label>Description:</label></td>
+				<td colspan="2"><textarea name="description"
+										  placeholder="Short description of the section" required="required"></textarea></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center"><input type="submit"
+													  value="ADD Section"/></td>
+			</tr>
+		</table>
+	</form>
+</div>
+
+<div th:fragment="addtopic">
+	<form action="/addtopic" method="post"> <!-- method post - NOT show password in URL -->
+		<table>
+			<tr>
+				<td colspan="2"><label><b>ADD TOPIC</b></label></td>
+			</tr>
+			<tr>
+				<td><label>TITLE:</label></td>
+				<td><input type="text" name="title" required="required"/></td>
+			</tr>
+			<tr>
+				<td><label>Description:</label></td>
+				<td colspan="2"><textarea name="content"
+										  placeholder="Write something about content.." required="required"></textarea></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center"><input type="submit"
+													  value="ADD Topic"/></td>
+			</tr>
+		</table>
+	</form>
+</div>
+
+<div th:fragment="addpost">
+	<form action="/addpost" method="post"> <!-- method post - NOT show password in URL -->
+		<table>
+			<tr>
+				<td colspan="2"><label><b>ADD POST</b></label></td>
+			</tr>
+			<tr>
+				<td><label>Content:</label></td>
+				<td colspan="2"><textarea name="content"
+										  placeholder="Write the content of your post.." required="required"></textarea></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center"><input type="submit"
+													  value="ADD Post"/></td>
+			</tr>
+		</table>
+	</form>
+</div>
+</html>
