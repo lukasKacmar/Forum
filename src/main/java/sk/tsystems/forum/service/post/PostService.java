@@ -15,7 +15,5 @@ public interface PostService {
 
     List<Post> getPosts(Topic topic);
 
-
-
-
+    long getCount(Topic topic);
 }

@@ -44,4 +44,19 @@ public class PostServiceJPA implements PostService {
                 .getResultList();
         return posts;
     }
+
+    @Override
+    public long getCount(Topic topic) {
+
+        long replies;
+        replies = ((long) em
+                .createQuery("SELECT COUNT(*) FROM Post p WHERE p.topic = :topic")
+                .setParameter("topic", topic)
+                .getSingleResult());
+        if (replies == 0) {
+            return 0;
+        } else {
+            return replies-1;
+        }
+    }
 }

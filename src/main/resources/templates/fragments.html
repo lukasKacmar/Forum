@@ -225,7 +225,7 @@
 						<td style="width: 100%;" align="left" colspan="1"
 							th:text="${section.description}"></td>
 						<td>
-							<span th:text="${@ts.getCount(section)}"> </span>
+							<span>Topics: </span><span th:text="${@ts.getCount(section)}"> </span>
 						</td>
 					</tr>
 				</table>
@@ -250,8 +250,11 @@
 													  th:text="${topic.getMember().getUsername()}"></span></td>
 					</tr>
 					<tr>
-						<td style="width: 100%;" align="left" colspan="2"
+						<td style="width: 100%;" align="left" colspan="1"
 							th:text="${topic.content}"></td>
+						<td>
+							<span>Replies: </span><span th:text="${@ps.getCount(topic)}"> </span>
+						</td>
 					</tr>
 				</table>
 			</td>
