@@ -23,8 +23,13 @@
 </div>
 <br/>
 
+<div th:replace="fragments::categories"></div>
+<div th:replace="fragments::addcategory"></div>
+
 <div th:replace="fragments::sections"></div>
-<div th:replace="fragments::addsection"></div>
+<div th:if="${@memberController.admin}">
+    <span th:replace="fragments::addsection"></span>
+</div>
 
 <!--
 <div th:replace="fragments::topics"></div>

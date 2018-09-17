@@ -12,7 +12,7 @@
 		<form action="/loginmember" method="post"> <!-- method post - NOT show password in URL -->
 			<table>
 			<tr>
-			<td colspan = "2"><label><b>Login</b> to an existing GameStudio account</label></td>
+			<td colspan = "2"><label><b>Login</b> to an existing Phorum account</label></td>
 			</tr>
 				<tr>
 					<td><label>Username:</label></td>
@@ -25,6 +25,9 @@
 				<tr>
 					<td colspan="2" align="center"><input type="submit"
 						value="Login" /></td>
+				</tr>
+				<tr>
+					<td colspan="2"><b><span th:text="${message}"></span></b></td>
 				</tr>
 				<tr>
 				<td colspan="2">or <a style="text-decoration: underline;" href="registermember">Register new account!</a></td>

@@ -1,5 +1,6 @@
 package sk.tsystems.forum.service.section;
 
+import sk.tsystems.forum.entity.Category;
 import sk.tsystems.forum.entity.Section;
 
 import javax.persistence.EntityManager;
@@ -34,5 +35,37 @@ public class SectionServiceJPA implements SectionService {
                 .createQuery("SELECT s FROM Section s")
                 .getResultList();
         return sections;
+    }
+
+
+    @Override
+    public List<Section> getSections(Category category) {
+        List<Section> sections = em
+                .createQuery("SELECT s FROM Section s WHERE s.category = :category")
+                .setParameter("category", category)
+                .getResultList();
+        return sections;
+    }
+
+    @Override
+    public void addCategory(Category category) {
+        em.persist(category);
+    }
+
+    @Override
+    public Category getCategory(long id) {
+        Category c = em
+                .createQuery("SELECT c FROM Category c WHERE c.id= :id", Category.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        return c;
+    }
+
+    @Override
+    public List<Category> getCategories() {
+        List<Category> categories = em
+                .createQuery("SELECT c FROM Category c")
+                .getResultList();
+        return categories;
     }
 }

@@ -27,6 +27,10 @@ public class Section implements Serializable {
     @JoinColumn(foreignKey = @ForeignKey(name = "member_id", value = ConstraintMode.CONSTRAINT))
     private Member member;
 
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(foreignKey = @ForeignKey(name = "category_id", value = ConstraintMode.NO_CONSTRAINT))
+    private Category category;
+
     public Section() {
     }
 
@@ -73,5 +77,13 @@ public class Section implements Serializable {
 
     public void setMember(Member member) {
         this.member = member;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

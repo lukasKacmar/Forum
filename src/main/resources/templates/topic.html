@@ -16,15 +16,16 @@
     </div>
     <div th:if="${@memberController.logged}">
 			<span th:if="${@memberController.logged}"> Youuu are logged as <a class="white" href="/"
-                                                                            th:text="${@memberController.loggedUsername}"></a><span>.</span> <a
+                                                                              th:text="${@memberController.loggedUsername}"></a><span>.</span> <a
                     class="white" href="/logoutmember">Logout</a>
 			</span>
     </div>
 </div>
 
 <div th:replace="fragments::posts"></div>
-<div th:replace="fragments::addpost"></div>
-
+<div th:if="${@memberController.member}">
+    <span th:replace="fragments::addpost"></span>
+</div>
 <div th:replace="fragments::footer"></div>
 </body>
 </html>

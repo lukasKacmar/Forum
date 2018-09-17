@@ -4,6 +4,7 @@ package sk.tsystems.forum.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
 import sk.tsystems.forum.entity.Member;
@@ -21,9 +22,14 @@ public class MemberController {
     private Member loggedMember;
 
     @RequestMapping("/loginmember")
-    public String login(String username, String password) {
+    public String login(String username, String password, Model model) {
         if (username != null && password != null) {
             loggedMember = ms.login(username, password);
+            if(loggedMember.getRank()==Rank.BANNED){
+                loggedMember = null;
+                model.addAttribute("message", "You are banned!");
+                return "loginmember";
+            }
             return "redirect:/";
         }
         return "loginmember";
@@ -32,7 +38,7 @@ public class MemberController {
     @RequestMapping("/registermember")
     public String register(Member member) {
         if (member.getUsername() != null) {
-            member.setRank(Rank.GENERAL);
+            member.setRank(Rank.ADMIN);
             ms.register(member);
             loggedMember = ms.login(member.getUsername(), member.getPassword());
             return "redirect:/";
@@ -63,5 +69,24 @@ public class MemberController {
             return loggedMember.getUsername();
         }
         return "anonymous";
+    }
+
+    public boolean isAdmin(){
+        if(loggedMember!=null) {
+            return (loggedMember.getRank() == Rank.ADMIN);
+        }
+        return false;
+    }
+
+    public boolean isMember(){
+        if(loggedMember!=null) {
+            if (loggedMember.getRank() == Rank.ADMIN){
+                return true;
+            }
+            if (loggedMember.getRank() == Rank.GENERAL){
+                return true;
+            }
+        }
+        return false;
     }
 }
