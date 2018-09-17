@@ -27,6 +27,9 @@ public class Member implements Serializable {
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Post> posts = new ArrayList<Post>();
 
+    @Enumerated(EnumType.STRING)
+    private Rank rank;
+
     public Member() {
     }
 
@@ -60,5 +63,13 @@ public class Member implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
+
+    public void setRank(Rank rank) {
+        this.rank = rank;
     }
 }

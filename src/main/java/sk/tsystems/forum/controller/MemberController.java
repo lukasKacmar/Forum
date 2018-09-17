@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
 import sk.tsystems.forum.entity.Member;
+import sk.tsystems.forum.entity.Rank;
 import sk.tsystems.forum.entity.Section;
 import sk.tsystems.forum.service.member.MemberService;
 
@@ -31,6 +32,7 @@ public class MemberController {
     @RequestMapping("/registermember")
     public String register(Member member) {
         if (member.getUsername() != null) {
+            member.setRank(Rank.GENERAL);
             ms.register(member);
             loggedMember = ms.login(member.getUsername(), member.getPassword());
             return "redirect:/";
