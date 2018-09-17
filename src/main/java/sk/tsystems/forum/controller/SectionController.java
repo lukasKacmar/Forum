@@ -30,8 +30,10 @@ public class SectionController {
 
     @RequestMapping("/addsection")
     public String addSection(Section section){
-        section.setMember(mc.getLoggedMember());
-        ss.addSection(section);
+        if(mc.getLoggedMember() != null) {
+            section.setMember(mc.getLoggedMember());
+            ss.addSection(section);
+        }
         return "redirect:/";
     }
 
