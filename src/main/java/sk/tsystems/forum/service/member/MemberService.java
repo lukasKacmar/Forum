@@ -12,5 +12,9 @@ public interface MemberService {
 
     Member getMember (long id);
 
+    void deleteMember(long id);
+
     List<Member> getMembers();
+
+
 }

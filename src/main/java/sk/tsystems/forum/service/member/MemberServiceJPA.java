@@ -40,8 +40,20 @@ public class MemberServiceJPA implements MemberService {
     @Override
     public List<Member> getMembers() {
         List<Member> members = em
-                .createQuery("SELECT m FROM Member m")
+                .createQuery("SELECT m FROM Member m WHERE (rank='BANNED') OR (rank='GENERAL') ORDER BY username")
                 .getResultList();
         return members;
+    }
+
+    @Override
+    public void deleteMember(long id) {
+        Member m = null;
+        m = em
+                .createQuery("SELECT m FROM Member m WHERE m.id = :id", Member.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        if(m != null) {
+            em.remove(m);
+        }
     }
 }

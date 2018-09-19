@@ -48,6 +48,18 @@ public class SectionServiceJPA implements SectionService {
     }
 
     @Override
+    public void deleteSection(long id) {
+        Section s = null;
+        s = em
+                .createQuery("SELECT s FROM Section s WHERE s.id = :id", Section.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        if(s != null){
+            em.remove(s);
+        }
+    }
+
+    @Override
     public void addCategory(Category category) {
         em.persist(category);
     }

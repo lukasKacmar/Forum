@@ -42,7 +42,15 @@ public class SectionController {
         section.setMember(mc.getLoggedMember());
         section.setCategory(currentCategory);
         ss.addSection(section);
-        return "redirect:/";
+        return "adminpanel";
+    }
+
+    @RequestMapping("/deletesection")
+    public String deleteSection(long id){
+        if(id != 0){
+            ss.deleteSection(id);
+        }
+        return "adminpanel";
     }
 
     @RequestMapping("/section")
@@ -59,7 +67,7 @@ public class SectionController {
         if(id != 0) {
             currentCategory = ss.getCategory(id);
             model.addAttribute("category", "Current category:");
-            return "category";
+            return "adminpanel";
         }
         return "redirect:/";
     }

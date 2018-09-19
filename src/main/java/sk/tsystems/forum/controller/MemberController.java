@@ -52,6 +52,32 @@ public class MemberController {
         return "redirect:/";
     }
 
+    @RequestMapping("/banmember")
+    public String banMember(long id){
+        Member m = ms.getMember(id);
+        if(m.getRank().equals(Rank.GENERAL) || m.getRank().equals(Rank.ADMIN)) {
+            m.setRank(Rank.BANNED);
+        } else{
+            m.setRank(Rank.GENERAL);
+        }
+        return "adminpanel";
+    }
+
+    @RequestMapping("/promotemember")
+    public String promoteMember(long id){
+        Member m = ms.getMember(id);
+        m.setRank(Rank.ADMIN);
+        return "adminpanel";
+    }
+
+    @RequestMapping("/deletemember")
+    public String deleteMember(long id){
+        if(id != 0){
+            ms.deleteMember(id);
+        }
+        return "adminpanel";
+    }
+
     public Member getLoggedMember() {
         return loggedMember;
     }

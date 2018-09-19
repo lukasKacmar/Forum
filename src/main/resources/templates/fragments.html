@@ -263,6 +263,7 @@
                             th:text="${section.description}"></td>
                         <td>
                             <span>Topics: </span><span th:text="${@ts.getCount(section)}"> </span>
+
                         </td>
                     </tr>
 
@@ -296,6 +297,12 @@
                                 th:text="${section.name}"></span></a></td>
                         <td style="width: 45%;"><span style="font-size: medium;"
                                                       th:text="${section.getMember().getUsername()}"></span></td>
+                        <td rowspan="2">
+                            <span><a class="tooltip"
+                                     th:href='${"/deletesection?id="+section.id}'>X
+                                <span class="tooltiptext">DELETE SECTION</span></a>
+                                </span>
+                        </td>
                     </tr>
                     <tr>
                         <td style="width: 100%;" align="left" colspan="1"
@@ -446,5 +453,45 @@
             </tr>
         </table>
     </form>
+</div>
+
+<div th:fragment="members">
+    <h2 style="color: white;" class="content">Members:</h2>
+    <table class="commentBig" style="width: 40%; table-layout: fixed;">
+        <tr>
+            <td style="padding: 0px;">
+
+                <table class="comment" style="width: 100%; table-layout: fixed;"
+                       th:each="member: ${@ms.getMembers()}">
+                    <tr>
+                        <td><span th:text="${member.username}"></span></td>
+                        <td><span th:text="${member.email}"></span></td>
+                        <td><span th:text="${member.rank}"></span></td>
+                        <td>
+                        <span>
+                            <a class="tooltip"
+                               th:href='${"/banmember?id="+member.id}'>X
+                                <span class="tooltiptext">BAN THIS MEMBER</span></a>
+                        </span>
+                        </td>
+                        <td>
+                        <span>
+                            <a class="tooltip"
+                               th:href='${"/promotemember?id="+member.id}'>↑
+                                <span class="tooltiptext">PROMOTE TO ADMIN</span></a>
+                        </span>
+                        </td>
+                        <td>
+                        <span>
+                            <a class="tooltip"
+                               th:href='${"/deletemember?id="+member.id}'>DEL
+                                <span class="tooltiptext">DELETE MEMBER ACCOUNT</span></a>
+                        </span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </div>
 </html>

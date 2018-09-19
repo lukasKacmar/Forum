@@ -20,4 +20,6 @@ public interface SectionService {
     List<Section> getSections(Category category);
 
     List<Category> getCategories();
+
+    void deleteSection(long id);
 }

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-2"/>
+    <link rel="stylesheet" href="/css/stylesheet.css"/>
+
+    <title>Section</title>
+</head>
+<body bgcolor="white">
+<div id="content">
+    <h1 style="color: white;">Welcome to Phorum!</h1>
+    <div th:unless="${@memberController.logged}">
+        <a class="white" href="/loginmember">Login</a> or <a class="white"
+                                                             href="/registermember">Register</a>
+    </div>
+    <div th:if="${@memberController.logged}">
+			<span th:if="${@memberController.logged}"> You are logged as <a class="white" href="/"
+                                                                            th:text="${@memberController.loggedUsername}"></a><span>.</span> <a
+                    class="white" href="/logoutmember">Logout</a>
+			</span>
+    </div>
+</div>
+
+<div th:replace="fragments::categorySections"></div>
+<div th:if="${@memberController.admin}">
+    <span th:replace="fragments::addsection"></span>
+</div>
+<div th:if="${@memberController.admin}">
+    <div th:replace="fragments::members"></div>
+</div>
+<div th:replace="fragments::footer"></div>
+</body>
+</html>
