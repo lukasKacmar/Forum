@@ -30,6 +30,9 @@ public class Member implements Serializable {
     @Enumerated(EnumType.STRING)
     private Rank rank;
 
+    @Transient
+    private String repeatPassword;
+
     public Member() {
     }
 
@@ -71,5 +74,9 @@ public class Member implements Serializable {
 
     public void setRank(Rank rank) {
         this.rank = rank;
+    }
+
+    public boolean validatePassword() {
+        return password.equals(repeatPassword);
     }
 }

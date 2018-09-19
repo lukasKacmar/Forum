@@ -23,26 +23,63 @@ public class MemberController {
 
     @RequestMapping("/loginmember")
     public String login(String username, String password, Model model) {
-        if (username != null && password != null) {
-            loggedMember = ms.login(username, password);
-            if(loggedMember.getRank()==Rank.BANNED){
-                loggedMember = null;
-                model.addAttribute("message", "You are banned!");
+        if(username != null && password != null) {
+            if(username.equals("") && password.equals("")) {
                 return "loginmember";
             }
-            return "redirect:/";
+            else if(username.equals("") || password.equals("")) {
+                model.addAttribute("message", "Invalid login!");
+            }
+
+            loggedMember = ms.login(username, password);
+
+            if(loggedMember != null) {
+                if(loggedMember.getRank()==Rank.BANNED){
+                    loggedMember = null;
+                    model.addAttribute("message", "You are banned!");
+                    return "loginmember";
+                }
+                return "redirect:/";
+            }
+            else {
+                model.addAttribute("message", "Invalid login!");
+                return "loginmember";
+            }
         }
+
+        if(username == null && password != null) {
+            model.addAttribute("message", "Invalid login!");
+        }
+        else if(username != null) {
+            model.addAttribute("message", "Invalid login!");
+        }
+
         return "loginmember";
     }
 
     @RequestMapping("/registermember")
-    public String register(Member member) {
+    public String register(Member member, Model model) {
+
+        // todo check password
+
+        if(ms.emailExists(member.getEmail())) {
+            model.addAttribute("emailMessage", "Invalid Email!");
+            return "registermember";
+        }
+
+        if(ms.usernameExists(member.getUsername())) {
+            model.addAttribute("usernameMessage", "Invalid Username!");
+            return "registermember";
+        }
+
         if (member.getUsername() != null) {
-            member.setRank(Rank.ADMIN);
+            member.setRank(Rank.GENERAL);
             ms.register(member);
             loggedMember = ms.login(member.getUsername(), member.getPassword());
             return "redirect:/";
         }
+
+        model.addAttribute("passwordMessage", "Password doesn't match!");
         return "registermember";
     }
 
@@ -97,22 +134,11 @@ public class MemberController {
         return "anonymous";
     }
 
-    public boolean isAdmin(){
-        if(loggedMember!=null) {
-            return (loggedMember.getRank() == Rank.ADMIN);
-        }
-        return false;
+    public boolean isAdmin() {
+        return loggedMember != null && (loggedMember.getRank() == Rank.ADMIN);
     }
 
-    public boolean isMember(){
-        if(loggedMember!=null) {
-            if (loggedMember.getRank() == Rank.ADMIN){
-                return true;
-            }
-            if (loggedMember.getRank() == Rank.GENERAL){
-                return true;
-            }
-        }
-        return false;
+    public boolean isMember() {
+        return loggedMember != null && (loggedMember.getRank() == Rank.ADMIN || loggedMember.getRank() == Rank.GENERAL);
     }
 }

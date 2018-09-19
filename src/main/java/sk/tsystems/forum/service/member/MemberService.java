@@ -16,5 +16,7 @@ public interface MemberService {
 
     List<Member> getMembers();
 
+    public boolean emailExists(String email);
 
+    public boolean usernameExists(String username);
 }

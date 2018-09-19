@@ -3,6 +3,7 @@ package sk.tsystems.forum.service.member;
 import sk.tsystems.forum.entity.Member;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -20,21 +21,27 @@ public class MemberServiceJPA implements MemberService {
 
     @Override
     public Member login(String username, String password) {
-        Member m = em
-                .createQuery("SELECT m FROM Member m WHERE m.username = :username AND m.password = :password", Member.class)
-                .setParameter("username", username)
-                .setParameter("password", password)
-                .getSingleResult();
-        return m;
+        try {
+            return em
+                    .createQuery("SELECT m FROM Member m WHERE m.username = :username AND m.password = :password", Member.class)
+                    .setParameter("username", username)
+                    .setParameter("password", password)
+                    .getSingleResult();
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
     @Override
     public Member getMember(long id) {
-        Member m = em
-                .createQuery("SELECT m FROM Member m WHERE m.id = :id", Member.class)
-                .setParameter("id", id)
-                .getSingleResult();
-        return m;
+        try {
+            return em
+                    .createQuery("SELECT m FROM Member m WHERE m.id = :id", Member.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
     @Override
@@ -54,6 +61,32 @@ public class MemberServiceJPA implements MemberService {
                 .getSingleResult();
         if(m != null) {
             em.remove(m);
+        }
+    }
+
+    @Override
+    public boolean emailExists(String email) {
+        try {
+            Member m = em
+                    .createQuery("SELECT m FROM Member m WHERE m.email = :email", Member.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+            return m != null;
+        } catch (NoResultException ex) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean usernameExists(String username) {
+        try {
+            Member m = em
+                    .createQuery("SELECT m FROM Member m WHERE m.username = :username", Member.class)
+                    .setParameter("username", username)
+                    .getSingleResult();
+            return m != null;
+        } catch (NoResultException ex) {
+            return false;
         }
     }
 }
