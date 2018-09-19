@@ -377,12 +377,6 @@ label{
 	margin-bottom: 15px;
 }
 
-input,
-input::-webkit-input-placeholder {
-    font-size: 11px;
-    padding-top: 3px;
-}
-
 .main-login{
  	background-color: #fff;
     /* shadows and rounded borders */
@@ -410,9 +404,14 @@ input::-webkit-input-placeholder {
 	text-align: center;
 }
 
+input,
+input::-webkit-input-placeholder {
+    font-size: 11px;
+    padding-top: 3px;
+}
 
-
-input[type=text], input[type=password]{
+input[type=text],
+input[type=password]{
     width:100%;
     border:2px solid #aaa;
     border-radius:4px;
@@ -422,7 +421,8 @@ input[type=text], input[type=password]{
     transition:.3s;
   }
 
-  input[type=text]:focus, input[type=password]:focus{
+ input[type=text]:focus,
+ input[type=password]:focus{
     border-color:dodgerBlue;
     box-shadow:0 0 8px 0 dodgerBlue;
-  }
+ }
