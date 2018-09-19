@@ -1,6 +1,17 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-2"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="/css/stylesheet.css"/>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
 
+
+    <title>Phorum</title>
+</head>
+<body>
 <div th:fragment="header">
     <table class="header">
         <tr>
@@ -212,36 +223,27 @@
 </div>
 
 <div th:fragment="categories">
-    <h2 style="color: white;" class="content">Categories:</h2>
-    <table class="commentBig" style="width: 40%; table-layout: fixed;">
-        <tr>
-            <td style="padding: 0px;">
 
-                <table class="comment" style="width: 100%; table-layout: fixed;"
-                       th:each="category: ${@ss.getCategories()}">
-                    <tr>
-                        <td style="width: 45%;"><a th:href='${"/category?id="+category.id}'><span
-                                style="text-decoration: underline; font-size: medium;"
-                                th:text="${category.name}"></span></a></td>
-                        <td style="width: 100%;" align="left" colspan="1"
-                            th:text="${category.id}"></td>
-                    </tr>
+    <div class="container">
+        <div class="row" th:each="category: ${@ss.getCategories()}">
+            <a th:href='${"/category?id="+category.id}'>
+                <span id="categoryIndex" th:text="${category.name}"></span></a>
 
-                    <table class="comment" style="width: 40%; table-layout: fixed;"
-                           th:each="section: ${category.getSections()}">
-                        <tr>
-                            <td>
-                                <span th:text="${section.name}"></span>
-                            </td>
-                        </tr>
-                    </table>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3" id="sectionIndex" th:each="section: ${category.getSections()}">
+                        <a th:href='${"/section?id="+section.id}'>
+                            <span style="color:white;" th:text="${section.name}"></span></a>
 
-                </table>
-            </td>
-        </tr>
-    </table>
+                    </div>
+                    <div class="col-sm-6">
+                            <span style="color:white;">+</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
 
 <div th:fragment="sections">
     <h2 style="color: white;" class="content">Sections:</h2>
@@ -319,53 +321,75 @@
 
 <div th:fragment="topics">
     <h2 style="color: white;" class="content">Topics:</h2>
-    <table class="commentBig" style="width: 40%; table-layout: fixed;">
-        <tr>
-            <td style="padding: 0px;">
+    <div class="container">
 
-                <table class="comment" style="width: 100%; table-layout: fixed;"
-                       th:each="topic: ${@ts.getTopics(@sectionController.getCurrentSection())}">
-                    <tr>
-                        <td style="width: 45%;"><a th:href='${"/topic?id="+topic.id}'><span
-                                style="text-decoration: underline; font-size: medium;"
-                                th:text="${topic.title}"></span></a></td>
-                        <td style="width: 45%;"><span style="font-size: medium;"
-                                                      th:text="${topic.getMember().getUsername()}"></span></td>
-                    </tr>
-                    <tr>
-                        <td style="width: 100%;" align="left" colspan="1"
-                            th:text="${topic.content}"></td>
-                        <td>
-                            <span>Replies: </span><span th:text="${@ps.getCount(topic)}"> </span>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
+        <div class="row" id="rowBootstrap"
+             th:each="topic: ${@ts.getTopics(@sectionController.getCurrentSection())}">
+
+            <div class="col-sm-1">
+                <span>
+                            <a class="tooltip"
+                               th:href='${"/topic?id="+topic.id}'>AHOJ
+                                <span class="tooltiptext">PROMOTE TO ADMIN</span></a>
+                        </span>
+            </div>
+            <div class="col-sm-6">
+                <a class="mytooltip" th:href='${"/topic?id="+topic.id}'>
+                    <span style="color:white;" th:text="${topic.title}"></span>
+                    <span style="color:white;" class="mytooltiptext">
+                        <span th:text="${topic.content}"></span>
+                    </span>
+                </a>
+            </div>
+
+            <div class="col-sm">
+                <span>Replies: </span><span th:text="${@ps.getCount(topic)}"> </span>
+            </div>
+            <div class="col-sm">
+                <span th:text="${topic.getMember().getUsername()}"></span>
+            </div>
+            <div class="col-sm">
+                <span th:text="${#dates.format(topic.creationDate, 'dd-MM-yyyy')}"></span>
+            </div>
+            <div class="col-sm">
+                <span th:if="${@topicController.isMembersTopic(topic.getMember().getId())}">
+                    <a class="mytooltip" style="color:red" th:href='${"/deletetopic?id="+topic.id}'>DEL
+                        <span class="mytooltiptext">DELETE TOPIC</span>
+                    </a>
+                </span>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div th:fragment="posts">
     <h2 style="color: white;" class="content">Posts:</h2>
-    <table class="commentBig" style="width: 40%; table-layout: fixed;">
-        <tr>
-            <td style="padding: 0px;">
-
-                <table class="comment" style="width: 100%; table-layout: fixed;"
-                       th:each="post: ${@ps.getPosts(@topicController.getCurrentTopic())}">
-                    <tr>
-                        <td></td>
-                        <td style="width: 45%;"><span style="font-size: medium;"
-                                                      th:text="${post.getMember().getUsername()}"></span></td>
-                    </tr>
-                    <tr>
-                        <td style="width: 100%;" align="left" colspan="2"
-                            th:text="${post.content}"></td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
+    <div class="container">
+        <div class="row" th:each="post: ${@ps.getPosts(@topicController.getCurrentTopic())}">
+            <div class="container">
+                <div class="row" id="rowPost">
+                    <div class="col-sm-2">
+                        <span style="font-size: medium; color: white"
+                              th:text="${post.getMember().getUsername()}"></span>
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="row" style="color: white">
+                            <span th:text="${#dates.format(post.creationDate, 'MM/dd/yyyy')}"></span>
+                        </div>
+                        <div class="row" style="color: white">
+                            <span th:text="${post.content}"></span></div>
+                    </div>
+                    <div class="col-sm-1">
+                        <span th:if="${@postController.isMembersPost(post.getMember().getId())}">
+                            <a style="color:red" class="mytooltip" th:href='${"/deletepost?id="+post.id}'>DEL
+                                <span class="mytooltiptext">DELETE POST</span>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div th:fragment="addcategory">
@@ -469,23 +493,23 @@
                         <td><span th:text="${member.rank}"></span></td>
                         <td>
                         <span>
-                            <a class="tooltip"
+                            <a class="mytooltip"
                                th:href='${"/banmember?id="+member.id}'>X
-                                <span class="tooltiptext">BAN THIS MEMBER</span></a>
+                                <span class="mytooltiptext">BAN THIS MEMBER</span></a>
                         </span>
                         </td>
                         <td>
                         <span>
-                            <a class="tooltip"
+                            <a class="mytooltip"
                                th:href='${"/promotemember?id="+member.id}'>↑
-                                <span class="tooltiptext">PROMOTE TO ADMIN</span></a>
+                                <span class="mytooltiptext">PROMOTE TO ADMIN</span></a>
                         </span>
                         </td>
                         <td>
                         <span>
-                            <a class="tooltip"
+                            <a class="mytooltip"
                                th:href='${"/deletemember?id="+member.id}'>DEL
-                                <span class="tooltiptext">DELETE MEMBER ACCOUNT</span></a>
+                                <span class="mytooltiptext">DELETE MEMBER ACCOUNT</span></a>
                         </span>
                         </td>
                     </tr>
@@ -494,4 +518,5 @@
         </tr>
     </table>
 </div>
+</body>
 </html>

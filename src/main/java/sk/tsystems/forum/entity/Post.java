@@ -10,7 +10,7 @@ public class Post implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(foreignKey = @ForeignKey(name = "topic_id", value = ConstraintMode.NO_CONSTRAINT))
@@ -43,7 +43,7 @@ public class Post implements Serializable {
         this.lastUpdateDate = new Date();
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

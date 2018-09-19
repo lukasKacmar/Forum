@@ -25,22 +25,32 @@ public class TopicController {
 
     private Topic currentTopic;
 
-   @RequestMapping("/addtopic")
-    public String addTopic(Topic topic){
+    @RequestMapping("/addtopic")
+    public String addTopic(Topic topic) {
         topic.setMember(mc.getLoggedMember());
         topic.setSection(sc.getCurrentSection());
         ts.addTopic(topic);
-        return "redirect:/";
+        return "redirect:/section?id=" + sc.getCurrentSection().getId();
+    }
+
+    @RequestMapping("/deletetopic")
+    public String deleteTopic(long id) {
+        ts.deleteTopic(id);
+        return "redirect:/section?id=" + sc.getCurrentSection().getId();
     }
 
     @RequestMapping("/topic")
-    public String accessTopic(long id){
-       if(id != 0) {
-           currentTopic = ts.getTopic(id);
-           currentTopic.setViews(currentTopic.getViews()+1);
-           return "topic";
-       }
+    public String accessTopic(long id) {
+        if (id != 0) {
+            currentTopic = ts.getTopic(id);
+            currentTopic.setViews(currentTopic.getViews() + 1);
+            return "topic";
+        }
         return "redirect:/";
+    }
+
+    public boolean isMembersTopic(long id){
+        return mc.isAdmin() || mc.getLoggedMember() != null && mc.getLoggedMember().getId() == id;
     }
 
     public Topic getCurrentTopic() {

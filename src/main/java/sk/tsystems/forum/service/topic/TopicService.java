@@ -14,4 +14,6 @@ public interface TopicService {
     List<Topic> getTopics(Section section);
 
     long getCount(Section section);
+
+    void deleteTopic(long id);
 }

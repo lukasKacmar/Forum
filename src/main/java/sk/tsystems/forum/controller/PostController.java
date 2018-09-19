@@ -29,7 +29,17 @@ public class PostController {
         post.setMember(mc.getLoggedMember());
         post.setTopic(tc.getCurrentTopic());
         ps.addPost(post);
-        return "redirect:/";
+        return "redirect:/topic?id=" + tc.getCurrentTopic().getId();
+    }
+
+    @RequestMapping("/deletepost")
+    public String deletePost(long id){
+        ps.deletePost(id);
+        return "redirect:/topic?id=" + tc.getCurrentTopic().getId();
+    }
+
+    public boolean isMembersPost(long id){
+        return mc.isAdmin() || (mc.getLoggedMember() != null && mc.getLoggedMember().getId() == id);
     }
 
 

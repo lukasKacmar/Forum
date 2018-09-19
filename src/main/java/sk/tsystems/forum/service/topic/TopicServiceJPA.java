@@ -44,4 +44,16 @@ public class TopicServiceJPA implements TopicService {
                 .setParameter("section", section)
                 .getSingleResult();
     }
+
+    @Override
+    public void deleteTopic(long id) {
+        Topic t = null;
+        t = em
+                .createQuery("SELECT t FROM Topic t WHERE t.id = :id", Topic.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        if(t != null) {
+            em.remove(t);
+        }
+    }
 }

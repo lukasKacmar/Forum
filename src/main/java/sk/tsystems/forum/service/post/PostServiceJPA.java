@@ -59,4 +59,16 @@ public class PostServiceJPA implements PostService {
             return replies-1;
         }
     }
+
+    @Override
+    public void deletePost(long id) {
+        Post p = null;
+        p = em
+                .createQuery("SELECT p FROM Post p WHERE p.id = :id", Post.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        if(p != null) {
+            em.remove(p);
+        }
+    }
 }

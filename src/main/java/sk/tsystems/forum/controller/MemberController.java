@@ -38,7 +38,7 @@ public class MemberController {
     @RequestMapping("/registermember")
     public String register(Member member) {
         if (member.getUsername() != null) {
-            member.setRank(Rank.ADMIN);
+            member.setRank(Rank.GENERAL);
             ms.register(member);
             loggedMember = ms.login(member.getUsername(), member.getPassword());
             return "redirect:/";
@@ -72,9 +72,8 @@ public class MemberController {
 
     @RequestMapping("/deletemember")
     public String deleteMember(long id){
-        if(id != 0){
-            ms.deleteMember(id);
-        }
+        Member m = ms.getMember(id);
+        m.setRank(Rank.DELETED);
         return "adminpanel";
     }
 
@@ -114,5 +113,9 @@ public class MemberController {
             }
         }
         return false;
+    }
+
+    public boolean isDeleted(Member member){
+        return member.getRank() == Rank.DELETED;
     }
 }
