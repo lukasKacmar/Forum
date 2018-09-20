@@ -1,10 +1,13 @@
 package sk.tsystems.forum.service.post;
 
 
+import sk.tsystems.forum.entity.Like;
+import sk.tsystems.forum.entity.Member;
 import sk.tsystems.forum.entity.Post;
 import sk.tsystems.forum.entity.Topic;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -48,15 +51,14 @@ public class PostServiceJPA implements PostService {
     @Override
     public long getCount(Topic topic) {
 
-        long replies;
-        replies = ((long) em
+        long replies = ((long) em
                 .createQuery("SELECT COUNT(*) FROM Post p WHERE p.topic = :topic")
                 .setParameter("topic", topic)
                 .getSingleResult());
         if (replies == 0) {
             return 0;
         } else {
-            return replies-1;
+            return replies - 1;
         }
     }
 
@@ -67,8 +69,46 @@ public class PostServiceJPA implements PostService {
                 .createQuery("SELECT p FROM Post p WHERE p.id = :id", Post.class)
                 .setParameter("id", id)
                 .getSingleResult();
-        if(p != null) {
+        if (p != null) {
             em.remove(p);
         }
+    }
+
+    @Override
+    public void likePost(Like like) {
+        em.persist(like);
+    }
+
+    @Override
+    public void unlikePost(Post post, Member member) {
+        Like l = em
+                .createQuery("SELECT l FROM Like l WHERE l.post = :post AND l.member = :member", Like.class)
+                .setParameter("post", post)
+                .setParameter("member", member)
+                .getSingleResult();
+        if (l != null) {
+            em.remove(l);
+        }
+    }
+
+    @Override
+    public Like getLike(Post post, Member member) {
+        try {
+            return em
+                    .createQuery("SELECT l FROM Like l WHERE l.post = :post AND l.member = :member", Like.class)
+                    .setParameter("post", post)
+                    .setParameter("member", member)
+                    .getSingleResult();
+        } catch (NoResultException ex) {
+            return null;
+        }
+    }
+
+    @Override
+    public long getLikesCount(Post post) {
+        return ((long) em
+                .createQuery("SELECT COUNT(*) FROM Like l WHERE l.post = :post")
+                .setParameter("post", post)
+                .getSingleResult());
     }
 }

@@ -83,10 +83,50 @@ h4 {
     margin: 5px;
     padding: 2px;
     border-radius: 1rem;
+}
 
+#rowAddTopic {
+    background-color: black;
+    margin: 5px;
+    padding: 2px;
+    border-radius: 1rem;
 }
 
 
+
+#rowAddPost {
+    background-color: black;
+    margin: 5px;
+    padding: 2px;
+    border-radius: 1rem;
+}
+
+#categorySection {
+   background-color: black;
+    margin: 5px;
+    padding: 2px;
+    border-radius: 1rem;
+}
+
+#button {
+    	font-size: 1.5rem;
+    	color: white;
+        border: 2px;
+    	border-radius: 1rem;
+    	border-style: solid;
+        background-color:black;
+        outline:none;
+}
+
+#button2 {
+    	font-size: 1.5rem;
+    	color: white;
+        border: 2px;
+    	border-radius: 1rem;
+    	border-style: solid;
+        background-color:black;
+        outline:none;
+}
 
 .col-sm {
     font-family: Arial, "Arial CE", "Helvetica CE", sans-serif;
@@ -107,9 +147,10 @@ h4 {
 	text-align: center;
 	border-radius: 1rem;
     padding:1rem;
+}
 
-
-
+#marginRow {
+    margin-top: 5px;
 }
 
 #categoryIndex {

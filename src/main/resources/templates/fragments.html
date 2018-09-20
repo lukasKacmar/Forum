@@ -237,7 +237,7 @@
 
                     </div>
                     <div class="col-sm-6">
-                            <span style="color:white;">+</span>
+                        <span style="color:white;">+</span>
                     </div>
                 </div>
             </div>
@@ -287,37 +287,76 @@
 
 <div th:fragment="categorySections">
     <h2 style="color: white;" class="content">Sections:</h2>
-    <table class="commentBig" style="width: 40%; table-layout: fixed;">
-        <tr>
-            <td style="padding: 0px;">
+    <div class="container">
+        <div class="row" id="categorySection"
+             th:each="section: ${@ss.getSections(@sectionController.getCurrentCategory())}">
+            <div class="col-sm">
+                <a th:href='${"/section?id="+section.id}'><span
+                        style="text-decoration: underline; font-size: medium; color:white;"
+                        th:text="${section.name}"></span></a>
+            </div>
+            <div class="col-sm">
+                <span style="font-size: medium;"
+                      th:text="${section.getMember().getUsername()}"></span>
+            </div>
+            <div class="col-sm">
 
-                <table class="comment" style="width: 100%; table-layout: fixed;"
-                       th:each="section: ${@ss.getSections(@sectionController.getCurrentCategory())}">
-                    <tr>
-                        <td style="width: 45%;"><a th:href='${"/section?id="+section.id}'><span
-                                style="text-decoration: underline; font-size: medium;"
-                                th:text="${section.name}"></span></a></td>
-                        <td style="width: 45%;"><span style="font-size: medium;"
-                                                      th:text="${section.getMember().getUsername()}"></span></td>
-                        <td rowspan="2">
-                            <span><a class="tooltip"
-                                     th:href='${"/deletesection?id="+section.id}'>X
-                                <span class="tooltiptext">DELETE SECTION</span></a>
+                <span><a class="mytooltip"
+                         th:href='${"/deletesection?id="+section.id}' style="color:white;">X
+                                <span class="mytooltiptext">DELETE SECTION</span></a>
                                 </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 100%;" align="left" colspan="1"
-                            th:text="${section.description}"></td>
-                        <td>
-                            <span>Topics: </span><span th:text="${@ts.getCount(section)}"> </span>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm" th:text="${section.description}">
+
+                    </div>
+                    <div class="col-sm">
+                        <span>Topics: </span><span th:text="${@ts.getCount(section)}"> </span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
 </div>
+
+<!--
+<table class="commentBig" style="width: 40%; table-layout: fixed;">
+    <tr>
+        <td style="padding: 0px;">
+
+            <table class="comment" style="width: 100%; table-layout: fixed;"
+                   th:each="section: ${@ss.getSections(@sectionController.getCurrentCategory())}">
+                <tr>
+                    <td style="width: 45%;"><a th:href='${"/section?id="+section.id}'><span
+                            style="text-decoration: underline; font-size: medium;"
+                            th:text="${section.name}"></span></a></td>
+                    <td style="width: 45%;"><span style="font-size: medium;"
+                                                  th:text="${section.getMember().getUsername()}"></span></td>
+                    <td rowspan="2">
+                            <span><a class="mytooltip"
+                                     th:href='${"/deletesection?id="+section.id}'>X
+                                <span class="mytooltiptext">DELETE SECTION</span></a>
+                                </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 100%;" align="left" colspan="1"
+                        th:text="${section.description}"></td>
+                    <td>
+                        <span>Topics: </span><span th:text="${@ts.getCount(section)}"> </span>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</div>
+-->
 
 <div th:fragment="topics">
     <h2 style="color: white;" class="content">Topics:</h2>
@@ -328,9 +367,9 @@
 
             <div class="col-sm-1">
                 <span>
-                            <a class="tooltip"
+                            <a class="mytooltip"
                                th:href='${"/topic?id="+topic.id}'>AHOJ
-                                <span class="tooltiptext">PROMOTE TO ADMIN</span></a>
+                                <span class="mytooltiptext">PROMOTE TO ADMIN</span></a>
                         </span>
             </div>
             <div class="col-sm-6">
@@ -372,7 +411,7 @@
                         <span style="font-size: medium; color: white"
                               th:text="${post.getMember().getUsername()}"></span>
                     </div>
-                    <div class="col-sm-9">
+                    <div class="col-sm-6">
                         <div class="row" style="color: white">
                             <span th:text="${#dates.format(post.creationDate, 'MM/dd/yyyy')}"></span>
                         </div>
@@ -385,6 +424,23 @@
                                 <span class="mytooltiptext">DELETE POST</span>
                             </a>
                         </span>
+                    </div>
+                    <div class="col-sm-1">
+                        <span th:if="${@postController.isMemberLogged()}">
+                            <span th:unless="${@postController.hasMemberLiked(post.id)}">
+                                <a style="color:red" class="mytooltip" th:href='${"/likepost?id="+post.id}'>LIKE
+                                    <span class="mytooltiptext">LIKE POST</span>
+                                </a>
+                            </span>
+                        </span>
+                        <span th:if="${@postController.hasMemberLiked(post.id)}">
+                            <a style="color:red" class="mytooltip" th:href='${"/unlikepost?id="+post.id}'>UNLIKE
+                                <span class="mytooltiptext">UNLIKE POST</span>
+                            </a>
+                        </span>
+                    </div>
+                    <div class="col-sm-1" style="color: white">
+                        <span>Likes: </span><span th:text="${@ps.getLikesCount(post)}"> </span>
                     </div>
                 </div>
             </div>
@@ -435,7 +491,7 @@
     </form>
 </div>
 
-<div th:fragment="addtopic">
+<div th:fragment="addtopicc">
     <form action="/addtopic" method="post"> <!-- method post - NOT show password in URL -->
         <table>
             <tr>
@@ -448,7 +504,8 @@
             <tr>
                 <td><label>Description:</label></td>
                 <td colspan="2"><textarea name="content"
-                                          placeholder="Write something about content.." required="required"></textarea>
+                                          placeholder="Write the description of your post.."
+                                          required="required"></textarea>
                 </td>
             </tr>
             <tr>
@@ -459,23 +516,69 @@
     </form>
 </div>
 
+<div th:fragment="addtopic">
+    <form action="/addtopic" method="post"> <!-- method post - NOT show password in URL -->
+        <div class="container">
+
+            <div class="row" id="rowAddTopic">
+
+                <div class="container">
+
+                    <div class="row" style="display: flex;
+            align-items: center;">
+
+                        <div class="col-sm-2">
+
+                        </div>
+                        <div style="padding-left:0px" class="col-sm-8">
+                            <div class="row">
+                                <textarea style="height: 55px;" name="title"
+                                          placeholder="Write the title of your topic.."
+                                          required="required"></textarea>
+                            </div>
+
+
+
+                            <div class="row" id="marginRow">
+                                <textarea style="height: 120px;" name="content"
+                                          placeholder="Write the description of your topic.."
+                                          required="required"></textarea>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-2 center-block text-center">
+                            <span><input id="button2" type="submit" value="ADD"/>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
 <div th:fragment="addpost">
     <form action="/addpost" method="post"> <!-- method post - NOT show password in URL -->
-        <table>
-            <tr>
-                <td colspan="2"><label><b>ADD POST</b></label></td>
-            </tr>
-            <tr>
-                <td><label>Content:</label></td>
-                <td colspan="2"><textarea name="content"
-                                          placeholder="Write the content of your post.." required="required"></textarea>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" align="center"><input type="submit"
-                                                      value="ADD Post"/></td>
-            </tr>
-        </table>
+        <div class="container">
+            <div class="row" id="rowAddPost" style="display: flex;
+            align-items: center;">
+                <div class="col-sm-2">
+
+                </div>
+                <div style="padding-left:0px" class="col-sm-8">
+                    <textarea style="height: 80px;" name="content"
+                              placeholder="Write the content of your post.."
+                              required="required"></textarea>
+                </div>
+                <div class="col-sm-2 center-block text-center">
+                    <span><input id="button" type="submit"
+                                 value="ADD"/>
+                        </span>
+                </div>
+            </div>
+        </div>
     </form>
 </div>
 
