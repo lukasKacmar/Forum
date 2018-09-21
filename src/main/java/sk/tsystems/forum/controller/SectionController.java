@@ -37,6 +37,14 @@ public class SectionController {
         return "redirect:/";
     }
 
+    @RequestMapping("/deletecategory")
+    public String deleteCategory(long id){
+        if(id != 0){
+            ss.deleteCategory(id);
+        }
+        return "redirect:/";
+    }
+
     @RequestMapping("/addsection")
     public String addSection(Section section){
         section.setMember(mc.getLoggedMember());

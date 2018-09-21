@@ -161,7 +161,26 @@ h4 {
 	margin: 0px;
 	color: white;
 	text-align: left;
+}
 
+#categoryIndex2 {
+	font-family: Arial, "Arial CE", "Helvetica CE", sans-serif;
+	font-size: 20px;
+	position: relative; left: 150px;
+	font-weight: bold;
+	margin: 0px;
+	color: white;
+	text-align: left;
+}
+
+#categoryIndex3 {
+	font-family: Arial, "Arial CE", "Helvetica CE", sans-serif;
+	font-size: 20px;
+	position: relative; left: 150px;
+	font-weight: bold;
+	margin: 0px;
+	color: white;
+	text-align: left;
 }
 
 /* Tooltip container */
@@ -411,10 +430,7 @@ table.transparent {
 	background-color: rgba(0, 0, 0, 0.3);
 	width: 100%;
 }
-table.footer {
-	background-color: rgba(0, 0, 0, 0.3);
-	width: 12%;
-}
+
 
 table.game {
 	border-color: black;
@@ -465,4 +481,30 @@ table th {
 	text-align: center;
 	color: white;
 }
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
 
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  position: relative;
+  margin: 0;
+  padding-bottom: 6rem;
+  min-height: 100%;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+#footer {
+   position:absolute;
+   bottom:0;
+   height:30px;   /* Height of the footer */
+   background-color: rgba(0, 0, 0, 0.3);
+   text-align: center;
+
+}

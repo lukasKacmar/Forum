@@ -11,6 +11,8 @@ public interface SectionService {
 
     void addCategory(Category category);
 
+    void deleteCategory(long id);
+
     Section getSection(long id);
 
     Category getCategory(long id);

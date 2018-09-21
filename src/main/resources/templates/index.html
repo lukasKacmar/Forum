@@ -29,8 +29,9 @@
 <br/>
 
 <div th:replace="fragments::categories"></div>
-<div th:replace="fragments::addcategory"></div>
-
+<div th:if="${@memberController.admin}">
+<span th:replace="fragments::addcategory"></span>
+</div>
 <div th:replace="fragments::footer"></div>
 </body>
 </html>

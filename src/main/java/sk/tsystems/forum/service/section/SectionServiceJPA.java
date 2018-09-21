@@ -80,4 +80,16 @@ public class SectionServiceJPA implements SectionService {
                 .getResultList();
         return categories;
     }
+
+    @Override
+    public void deleteCategory(long id) {
+        Category c = null;
+        c = em
+                .createQuery("SELECT c FROM Category c WHERE c.id = :id", Category.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        if(c != null){
+            em.remove(c);
+        }
+    }
 }

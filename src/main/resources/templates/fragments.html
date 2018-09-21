@@ -214,20 +214,29 @@
     <hr/>
 </div>
 
-<div th:fragment="footer">
-    <table class="footer">
-        <tr>
-            <td style="text-align: center; color: white;font-size: x-small;">Created by Sechuani IT Crew</td>
-        </tr>
-    </table>
+<div style="width:100%;" id="footer" th:fragment="footer">
+    <span style="text-align: center; color: white;font-size: small;">
+           Created by Sechuani IT Crew
+    </span>
 </div>
 
 <div th:fragment="categories">
 
     <div class="container">
         <div class="row" th:each="category: ${@ss.getCategories()}">
-            <a th:href='${"/category?id="+category.id}'>
-                <span id="categoryIndex" th:text="${category.name}"></span></a>
+            <span id="categoryIndex" th:text="${category.name}"></span>
+
+            <span th:if="${@memberController.admin}" style="margin-left:10px;" id="categoryIndex2">
+                <a class="mytooltip" th:href='${"/category?id="+category.id}' style="color:white;">+
+                    <span class="mytooltiptext">MANAGE THIS CATEGORY</span>
+                </a>
+            </span>
+
+            <span th:if="${@memberController.admin}" style="margin-left:10px;" id="categoryIndex3">
+                <a class="mytooltip" th:href='${"/deletecategory?id="+category.id}' style="color:white;">DEL
+                    <span class="mytooltiptext">DELETE CATEGORY</span>
+                </a>
+            </span>
 
             <div class="container">
                 <div class="row">
@@ -236,9 +245,7 @@
                             <span style="color:white;" th:text="${section.name}"></span></a>
 
                     </div>
-                    <div class="col-sm-6">
-                        <span style="color:white;">+</span>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -450,6 +457,25 @@
 
 <div th:fragment="addcategory">
     <form action="/addcategory" method="post"> <!-- method post - NOT show password in URL -->
+        <div class="container">
+            <div style="margin-top:15px;" class="row">
+                <div style="margin-left:135px;" class="col-sm-2">
+                    <input type="text" name="name" required="required" placeholder="Name of new category.."/>
+                </div>
+                <div class="col-sm-2">
+                    <input type="submit"
+                           value="ADD Category"/>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+
+<!--
         <table>
             <tr>
                 <td colspan="2"><label><b>ADD CATEGORY</b></label></td>
@@ -465,7 +491,7 @@
         </table>
     </form>
 </div>
-
+-->
 
 <div th:fragment="addsection">
     <form action="/addsection" method="post"> <!-- method post - NOT show password in URL -->
