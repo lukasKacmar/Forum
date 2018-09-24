@@ -48,6 +48,7 @@ public class PostServiceJPA implements PostService {
         return posts;
     }
 
+
     @Override
     public long getCount(Topic topic) {
 
@@ -60,6 +61,11 @@ public class PostServiceJPA implements PostService {
         } else {
             return replies - 1;
         }
+    }
+
+    @Override
+    public void updatePost(Post post) {
+        em.merge(post);
     }
 
     @Override
@@ -110,5 +116,13 @@ public class PostServiceJPA implements PostService {
                 .createQuery("SELECT COUNT(*) FROM Like l WHERE l.post = :post")
                 .setParameter("post", post)
                 .getSingleResult());
+    }
+
+    @Override
+    public List<Post> findPosts(String searchText) {
+        return em
+                .createQuery("SELECT p FROM Post p WHERE p.content LIKE :searchText")
+                .setParameter("searchText", "%" + searchText + "%")
+                .getResultList();
     }
 }

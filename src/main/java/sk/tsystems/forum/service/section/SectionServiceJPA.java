@@ -21,6 +21,11 @@ public class SectionServiceJPA implements SectionService {
     }
 
     @Override
+    public void updateSection(Section section) {
+        em.merge(section);
+    }
+
+    @Override
     public Section getSection(long id) {
         Section s = em
                 .createQuery("SELECT s FROM Section s WHERE s.id= :id", Section.class)

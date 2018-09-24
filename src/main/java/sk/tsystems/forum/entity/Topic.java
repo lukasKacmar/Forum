@@ -47,7 +47,9 @@ public class Topic implements Serializable {
 
     @PrePersist
     public void creation(){
-        this.creationDate = new Date();
+        if(creationDate == null) {
+            this.creationDate = new Date();
+        }
         this.lastUpdateDate = new Date();
     }
 

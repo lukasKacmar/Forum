@@ -33,6 +33,23 @@ public class TopicController {
         return "redirect:/section?id=" + sc.getCurrentSection().getId();
     }
 
+    @RequestMapping("/edittopic")
+    public String editTopic(long id){
+        if(id != 0){
+            currentTopic = ts.getTopic(id);
+            return "edittopic";
+        }
+        return "redirect:/";
+    }
+
+    @RequestMapping("/updatetopic")
+    public String updatePost(String title, String content){
+        currentTopic.setTitle(title);
+        currentTopic.setContent(content);
+        ts.updateTopic(currentTopic);
+        return "redirect:/section?id=" + sc.getCurrentSection().getId();
+    }
+
     @RequestMapping("/deletetopic")
     public String deleteTopic(long id) {
         ts.deleteTopic(id);
@@ -61,4 +78,7 @@ public class TopicController {
         this.currentTopic = currentTopic;
     }
 
+    public long getCurrentTopicId(){
+        return currentTopic.getId();
+    }
 }

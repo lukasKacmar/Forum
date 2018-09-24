@@ -20,6 +20,11 @@ public class TopicServiceJPA implements TopicService {
     }
 
     @Override
+    public void updateTopic(Topic topic) {
+        em.merge(topic);
+    }
+
+    @Override
     public Topic getTopic(Long id) {
         Topic t = em
                 .createQuery("SELECT t FROM Topic t WHERE t.id = :id", Topic.class)
@@ -35,6 +40,14 @@ public class TopicServiceJPA implements TopicService {
                 .setParameter("section", section)
                 .getResultList();
         return topics;
+    }
+
+    @Override
+    public List<Topic> findTopics(String searchText) {
+        return em
+                .createQuery("SELECT t FROM Topic t WHERE t.title LIKE :searchText")
+                .setParameter("searchText", "%" + searchText + "%")
+                .getResultList();
     }
 
     @Override

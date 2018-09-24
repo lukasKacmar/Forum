@@ -53,6 +53,23 @@ public class SectionController {
         return "adminpanel";
     }
 
+    @RequestMapping("/editsection")
+    public String editSection(long id){
+        if (id != 0){
+            currentSection = ss.getSection(id);
+            return "editsection";
+        }
+        return "redirect:/";
+    }
+
+    @RequestMapping("/updatesection")
+    public String updateSection(String name, String description){
+        currentSection.setName(name);
+        currentSection.setDescription(description);
+        ss.updateSection(currentSection);
+        return "adminpanel";
+    }
+
     @RequestMapping("/deletesection")
     public String deleteSection(long id){
         if(id != 0){

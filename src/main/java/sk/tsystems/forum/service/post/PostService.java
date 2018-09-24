@@ -19,6 +19,8 @@ public interface PostService {
 
     long getCount(Topic topic);
 
+    void updatePost(Post post);
+
     void deletePost(long id);
 
     void likePost(Like like);
@@ -28,4 +30,6 @@ public interface PostService {
     Like getLike(Post post, Member member);
 
     long getLikesCount(Post post);
+
+    List<Post> findPosts(String searchText);
 }
