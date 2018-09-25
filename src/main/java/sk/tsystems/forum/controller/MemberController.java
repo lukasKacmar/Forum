@@ -126,9 +126,8 @@ public class MemberController {
 
     @RequestMapping("/deletemember")
     public String deleteMember(long id){
-        if(id != 0){
-            ms.deleteMember(id);
-        }
+        Member m = ms.getMember(id);
+        m.setRank(Rank.DELETED);
         return "adminpanel";
     }
 
@@ -157,5 +156,9 @@ public class MemberController {
 
     public boolean isMember() {
         return loggedMember != null && (loggedMember.getRank() == Rank.ADMIN || loggedMember.getRank() == Rank.GENERAL);
+    }
+
+    public boolean isDeleted(Member member){
+        return member.getRank() == Rank.DELETED;
     }
 }

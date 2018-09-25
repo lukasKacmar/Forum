@@ -25,6 +25,11 @@ public class SectionServiceJPA implements SectionService {
     }
 
     @Override
+    public void updateSection(Section section) {
+        em.merge(section);
+    }
+
+    @Override
     public Section getSection(long id) {
         try {
             return em
@@ -100,6 +105,18 @@ public class SectionServiceJPA implements SectionService {
                     .getResultList();
         } catch (NoResultException ex) {
             return null;
+        }
+    }
+
+    @Override
+    public void deleteCategory(long id) {
+        Category c = null;
+        c = em
+                .createQuery("SELECT c FROM Category c WHERE c.id = :id", Category.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        if(c != null){
+            em.remove(c);
         }
     }
 }

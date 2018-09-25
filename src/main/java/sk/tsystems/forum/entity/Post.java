@@ -2,7 +2,9 @@ package sk.tsystems.forum.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -10,7 +12,7 @@ public class Post implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(foreignKey = @ForeignKey(name = "topic_id", value = ConstraintMode.NO_CONSTRAINT))
@@ -19,6 +21,9 @@ public class Post implements Serializable {
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(foreignKey = @ForeignKey(name = "member_id", value = ConstraintMode.NO_CONSTRAINT))
     private Member member;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private List<Like> likes = new ArrayList<Like>();
 
     @Column(columnDefinition = "TEXT")
     private String content;
@@ -34,7 +39,9 @@ public class Post implements Serializable {
 
     @PrePersist
     public void creation() {
-        this.creationDate = new Date();
+        if(creationDate == null) {
+            this.creationDate = new Date();
+        }
         this.lastUpdateDate = new Date();
     }
 
@@ -43,7 +50,7 @@ public class Post implements Serializable {
         this.lastUpdateDate = new Date();
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -89,5 +96,13 @@ public class Post implements Serializable {
 
     public void setLastUpdateDate(Date lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;
+    }
+
+    public List<Like> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(List<Like> likes) {
+        this.likes = likes;
     }
 }

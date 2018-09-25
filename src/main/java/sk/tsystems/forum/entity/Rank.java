@@ -1,5 +1,5 @@
 package sk.tsystems.forum.entity;
 
 public enum Rank {
-    GENERAL, BANNED, ADMIN
+    GENERAL, BANNED, ADMIN, DELETED
 }

@@ -25,6 +25,11 @@ public class TopicServiceJPA implements TopicService {
     }
 
     @Override
+    public void updateTopic(Topic topic) {
+        em.merge(topic);
+    }
+
+    @Override
     public Topic getTopic(Long id) {
         try {
             return em
@@ -49,6 +54,14 @@ public class TopicServiceJPA implements TopicService {
     }
 
     @Override
+    public List<Topic> findTopics(String searchText) {
+        return em
+                .createQuery("SELECT t FROM Topic t WHERE t.title LIKE :searchText")
+                .setParameter("searchText", "%" + searchText + "%")
+                .getResultList();
+    }
+
+    @Override
     public long getCount(Section section) {
         try {
             return (long) em
@@ -57,6 +70,18 @@ public class TopicServiceJPA implements TopicService {
                     .getSingleResult();
         } catch (NoResultException ex) {
             return 0;
+        }
+    }
+
+    @Override
+    public void deleteTopic(long id) {
+        Topic t = null;
+        t = em
+                .createQuery("SELECT t FROM Topic t WHERE t.id = :id", Topic.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        if(t != null) {
+            em.remove(t);
         }
     }
 }

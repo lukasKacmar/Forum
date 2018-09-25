@@ -37,11 +37,36 @@ public class SectionController {
         return "redirect:/";
     }
 
+    @RequestMapping("/deletecategory")
+    public String deleteCategory(long id){
+        if(id != 0){
+            ss.deleteCategory(id);
+        }
+        return "redirect:/";
+    }
+
     @RequestMapping("/addsection")
     public String addSection(Section section){
         section.setMember(mc.getLoggedMember());
         section.setCategory(currentCategory);
         ss.addSection(section);
+        return "adminpanel";
+    }
+
+    @RequestMapping("/editsection")
+    public String editSection(long id){
+        if (id != 0){
+            currentSection = ss.getSection(id);
+            return "editsection";
+        }
+        return "redirect:/";
+    }
+
+    @RequestMapping("/updatesection")
+    public String updateSection(String name, String description){
+        currentSection.setName(name);
+        currentSection.setDescription(description);
+        ss.updateSection(currentSection);
         return "adminpanel";
     }
 

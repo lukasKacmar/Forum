@@ -27,6 +27,9 @@ public class Member implements Serializable {
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Post> posts = new ArrayList<Post>();
 
+    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private List<Like> likes = new ArrayList<Like>();
+
     @Enumerated(EnumType.STRING)
     private Rank rank;
 

@@ -13,5 +13,11 @@ public interface TopicService {
 
     List<Topic> getTopics(Section section);
 
+    List<Topic> findTopics(String searchText);
+
     long getCount(Section section);
+
+    void updateTopic(Topic topic);
+
+    void deleteTopic(long id);
 }

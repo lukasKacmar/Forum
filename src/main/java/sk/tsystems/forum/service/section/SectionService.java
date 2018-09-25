@@ -9,7 +9,11 @@ public interface SectionService {
 
     void addSection(Section section);
 
+    void updateSection(Section section);
+
     void addCategory(Category category);
+
+    void deleteCategory(long id);
 
     Section getSection(long id);
 
