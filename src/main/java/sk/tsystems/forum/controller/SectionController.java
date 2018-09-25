@@ -109,6 +109,14 @@ public class SectionController {
         return currentCategory.getName();
     }
 
+    public String getCurrentSectionName(){
+        return currentSection.getName();
+    }
+
+    public long getCurrentSectionId(){
+        return currentSection.getId();
+    }
+
     public Section getCurrentSection() {
         return currentSection;
     }

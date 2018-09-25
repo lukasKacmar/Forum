@@ -10,19 +10,7 @@
     <title>Topic</title>
 </head>
 <body bgcolor="white">
-<div id="content">
-    <h1 style="color: white;">Welcome to Phorum!</h1>
-    <div th:unless="${@memberController.logged}">
-        <a class="white" href="/loginmember">Login</a> or <a class="white"
-                                                             href="/registermember">Register</a>
-    </div>
-    <div th:if="${@memberController.logged}">
-			<span th:if="${@memberController.logged}"> Youuu are logged as <a class="white" href="/"
-                                                                              th:text="${@memberController.loggedUsername}"></a><span>.</span> <a
-                    class="white" href="/logoutmember">Logout</a>
-			</span>
-    </div>
-</div>
+<div th:replace="fragments::header"></div>
     <span th:replace="fragments::editpost"></span>
 <div th:replace="fragments::footer"></div>
 </body>

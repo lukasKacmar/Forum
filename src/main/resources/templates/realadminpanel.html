@@ -11,7 +11,13 @@
 </head>
 <body bgcolor="white">
 <div th:replace="fragments::header"></div>
-    <span th:replace="fragments::edittopic"></span>
+
+<div th:if="${@memberController.admin}">
+    <div th:replace="fragments::members"></div>
+</div>
+<div id="content">
+    <a class="white" href="/">Back to Homepage</a>
+</div>
 <div th:replace="fragments::footer"></div>
 </body>
 </html>

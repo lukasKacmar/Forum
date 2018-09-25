@@ -5,6 +5,7 @@ import sk.tsystems.forum.entity.Member;
 import sk.tsystems.forum.entity.Post;
 import sk.tsystems.forum.entity.Topic;
 
+import java.util.Date;
 import java.util.List;
 
 public interface PostService {
@@ -32,4 +33,6 @@ public interface PostService {
     long getLikesCount(Post post);
 
     List<Post> findPosts(String searchText);
+
+    Date getLastPostDate(Topic topic);
 }

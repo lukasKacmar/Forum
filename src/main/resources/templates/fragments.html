@@ -12,27 +12,34 @@
     <title>Phorum</title>
 </head>
 <body>
-<div th:fragment="header" id="content">
-    <h1 style="color: white;">Welcome to Phorum!</h1>
-    <div th:unless="${@memberController.logged}">
-        <a class="white" href="/loginmember">Login</a> or <a class="white"
-                                                             href="/registermember">Register</a>
-    </div>
-    <div th:if="${@memberController.logged}">
-			<span th:if="${@memberController.logged}"> You are logged as <a class="white" href="/"
-                                                                            th:text="${@memberController.loggedUsername}"></a><span>.</span> <a
-                    class="white" href="/logoutmember">Logout</a>
-			</span>
-    </div>
-    <form class="form-horizontal" method="post" action="/findpost">
+<div th:fragment="header" id="header">
+
+    <h1>PHORUM!</h1>
+    <form method="post" action="/findpost">
         <div class="container">
-            <div class="row">
-                    <div class="col-sm-2">
-                <input type="text" class="form-control" name="searchText" id="searchText" placeholder="Enter text.."/>
+            <div class="row" style="display: flex;
+                 align-items: center;">
+                <div class="col-sm-2">
+                    <input style="height:2rem;" type="text" class="form-control" name="searchText" id="searchText"
+                           placeholder="Enter text.."/>
+                </div>
+                <div style="text-align:left" class="col-sm-2">
+                    <button type="submit" id="button8" style="font-size: 1.2rem;">SEARCH</button>
+                </div>
+                <div style="text-align:right;font-size:1rem;" class="col-sm-8">
+                    <div th:unless="${@memberController.logged}">
+                        <a class="white" href="/loginmember">Login</a>
+                        <span style="color:white;">or</span>
+                        <a class="white" href="/registermember">Register</a>
                     </div>
-                    <div class="col-sm-2">
-                <button type="submit" class="btn btn-primary btn-lg btn-block login-button">SEARCH</button>
+                    <div th:if="${@memberController.logged}">
+			            <span style="color:white;" th:if="${@memberController.logged}"> You are logged as
+                            <u><span class="white" th:text="${@memberController.loggedUsername}">
+                            </span></u><span>.</span>
+                            <a class="white" href="/logoutmember">Logout</a>
+			            </span>
                     </div>
+                </div>
             </div>
         </div>
     </form>
@@ -42,11 +49,15 @@
     <span style="text-align: center; color: white;font-size: small;">
            Created by Sechuani IT Crew
     </span>
+    <br/>
+    <u><a
+            th:if="${@memberController.admin}" style="text-align: center; color: white;font-size: small;" href="/accessadminpanel">Admin Control Panel </a></u>
+    <br/>
 </div>
 
 <div th:fragment="categories">
 
-    <div class="container">
+    <div style="padding-left:210px;" class="container">
         <div class="row" th:each="category: ${@ss.getCategories()}">
             <span id="categoryIndex" th:text="${category.name}"></span>
 
@@ -66,19 +77,19 @@
 
             <div class="container">
                 <div class="row">
-
-                    <div class="col-sm-3" id="sectionIndex" th:each="section: ${category.getSections()}">
+                    <div class="col-sm-3 " id="sectionIndex" th:each="section: ${category.getSections()}">
                         <a th:href='${"/section?id="+section.id}'>
-                            <div style="height:150px;line-height:25px;">
-                                <span style="color:white;position: relative;left:8px;top:8px;"
+                            <div style="width:175px; height:150px;">
+                                <span style="color:white; font-size:1.2rem; position:relative;left:8px;top:8px;"
                                       th:text="${section.name}"></span>
                                 <br/>
-                                <span style="color:white; font-size:small; position: relative;left:8px;top:8px; "
-                                      th:text="${section.description}"></span>
+                                <div style="color:white;font-weight: normal;line-height:20px; font-size:small; position: relative;left:8px;top:8px; "
+                                     th:text="${section.description}"></div>
                             </div>
                         </a>
                     </div>
                 </div>
+                <br/>
             </div>
         </div>
     </div>
@@ -125,8 +136,9 @@
 
 
 <div th:fragment="categorySections">
-    <h2 style="color: white;" class="content">Sections:</h2>
+
     <div class="container">
+
         <div class="row" id="categorySection"
              th:each="section: ${@ss.getSections(@sectionController.getCurrentCategory())}">
             <div class="col-sm"
@@ -157,9 +169,8 @@
 </div>
 
 <div th:fragment="topics">
-    <h2 style="color: white;" class="content">Topics:</h2>
-    <div class="container">
 
+    <div class="container">
         <div class="row" id="rowBootstrap"
              th:each="topic: ${@ts.getTopics(@sectionController.getCurrentSection())}">
 
@@ -183,7 +194,14 @@
                 <span th:text="${topic.getMember().getUsername()}"></span>
             </div>
             <div class="col-sm-2">
-                <span th:text="${#dates.format(topic.creationDate, 'dd-MM-yyyy')}"></span>
+                <span th:with="date=${@topicController.getLastPostDate(topic)}">
+                    <a class="mytooltip">
+
+                        <span th:if="${date!=null}" th:text="${#dates.format(date, 'dd-MM-yyyy')}"></span>
+                        <span class="mytooltiptext">LAST POST</span>
+                    </a>
+                    <span th:if="${date==null}">N/A</span>
+                </span>
             </div>
             <div class="col-xs">
                 <span th:if="${@topicController.isMembersTopic(topic.getMember().getId())}">
@@ -192,6 +210,9 @@
                         <span class="mytooltiptext">EDIT TOPIC</span>
                     </a>
                 </span>
+                <span th:unless="${@topicController.isMembersTopic(topic.getMember().getId())}">
+                    --------
+                </span>
             </div>
             <div class="col-xs">
                 <span th:if="${@topicController.isMembersTopic(topic.getMember().getId())}">
@@ -199,6 +220,9 @@
                         <img style="width:30px;height:30px;" src="images\bin.png"></img>
                         <span class="mytooltiptext">DELETE TOPIC</span>
                     </a>
+                </span>
+                <span th:unless="${@topicController.isMembersTopic(topic.getMember().getId())}">
+                    -------
                 </span>
             </div>
         </div>
@@ -212,14 +236,10 @@
         <div class="row" id="rowBootstrap2"
              th:each="topic: ${@ts.findTopics(@postController.getSearchText())}">
 
-            <div class="col-sm-1">
-                <span>
-                            <a class="mytooltip"
-                               th:href='${"/topic?id="+topic.id}'>AHOJ
-                                <span class="mytooltiptext">PROMOTE TO ADMIN</span></a>
-                        </span>
+            <div class="col-xs-1">
+                <img style="width:30px;height:30px;" src="images\topic3.png"></img>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-5">
                 <a class="mytooltip" th:href='${"/topic?id="+topic.id}'>
                     <span style="color:white;" th:text="${topic.title}"></span>
                     <span style="color:white;" class="mytooltiptext">
@@ -229,26 +249,35 @@
             </div>
 
             <div class="col-sm">
-                <span>Replies: </span><span th:text="${@ps.getCount(topic)}"> </span>
+                <span><img style="width:30px;height:30px;" src="images\reply.png"></img> </span><span
+                    th:text="${@ps.getCount(topic)}"> </span>
             </div>
-            <div class="col-sm">
+            <div class="col-sm-2">
                 <span th:text="${topic.getMember().getUsername()}"></span>
             </div>
-            <div class="col-sm">
+            <div class="col-sm-2">
                 <span th:text="${#dates.format(topic.creationDate, 'dd-MM-yyyy')}"></span>
             </div>
-            <div class="col-sm">
+            <div class="col-xs">
                 <span th:if="${@topicController.isMembersTopic(topic.getMember().getId())}">
-                    <a class="mytooltip" style="color:red" th:href='${"/edittopic?id="+topic.id}'>EDIT
+                    <a class="mytooltip" style="color:red" th:href='${"/edittopic?id="+topic.id}'>
+                        <img style="width:30px;height:30px;" src="images\edit.png"></img>
                         <span class="mytooltiptext">EDIT TOPIC</span>
                     </a>
                 </span>
+                <span th:unless="${@topicController.isMembersTopic(topic.getMember().getId())}">
+                    --------
+                </span>
             </div>
-            <div class="col-sm">
+            <div class="col-xs">
                 <span th:if="${@topicController.isMembersTopic(topic.getMember().getId())}">
-                    <a class="mytooltip" style="color:red" th:href='${"/deletetopic?id="+topic.id}'>DEL
+                    <a class="mytooltip" style="color:red" th:href='${"/deletetopic?id="+topic.id}'>
+                        <img style="width:30px;height:30px;" src="images\bin.png"></img>
                         <span class="mytooltiptext">DELETE TOPIC</span>
                     </a>
+                </span>
+                <span th:unless="${@topicController.isMembersTopic(topic.getMember().getId())}">
+                    --------
                 </span>
             </div>
         </div>
@@ -256,7 +285,6 @@
 </div>
 
 <div th:fragment="posts">
-    <h2 style="color: white;" class="content">Posts:</h2>
     <div class="container">
         <div class="row" th:each="post: ${@ps.getPosts(@topicController.getCurrentTopic())}">
             <div class="container">
@@ -265,6 +293,75 @@
                         <span style="font-size: medium; color: white"
                               th:text="${post.getMember().getUsername()}"></span>
                     </div>
+
+                    <div class="col-sm-6">
+                        <div class="row" style="color: white">
+                            <span th:text="${#dates.format(post.creationDate, 'MM/dd/yyyy - HH:mm')}"></span>
+                        </div>
+                        <div class="row" style="color: white">
+                            <span th:text="${post.content}"></span></div>
+                    </div>
+
+                    <div class="col-sm">
+                        <span th:if="${@postController.isMemberLogged()}">
+                            <span th:unless="${@postController.hasMemberLiked(post.id)}">
+                                <a style="color:red" class="mytooltip" th:href='${"/likepost?id="+post.id}'>
+                                    <img style="width:30px;height:30px;" src="images\like.png"></img>
+                                    <span class="mytooltiptext">LIKE POST</span>
+                                </a>
+                            </span>
+                        </span>
+                        <span th:if="${@postController.hasMemberLiked(post.id)}">
+                            <a style="color:red" class="mytooltip" th:href='${"/unlikepost?id="+post.id}'>
+                                <img style="width:30px;height:30px;" src="images\unlike.png"></img>
+                                <span class="mytooltiptext">UNLIKE POST</span>
+                            </a>
+                        </span>
+                    </div>
+
+                    <div class="col-sm-3" style="color: white">
+                        <span><span th:text="${@ps.getLikesCount(post)}"></span> people has liked this post.</span>
+                    </div>
+
+                    <div class="col-xs">
+                        <span th:if="${@postController.isMembersPost(post.getMember().getId())}">
+                            <a style="color:red" class="mytooltip" th:href='${"/editpost?id="+post.id}'>
+                                <img style="width:30px;height:30px;" src="images\edit.png"></img>
+                                <span class="mytooltiptext">EDIT POST</span>
+                            </a>
+                        </span>
+                        <span th:unless="${@postController.isMembersPost(post.getMember().getId())}">
+                            -------
+                        </span>
+                    </div>
+                    <div class="col-xs">
+                        <span th:if="${@postController.isMembersPost(post.getMember().getId())}">
+                            <a style="color:red" class="mytooltip" th:href='${"/deletepost?id="+post.id}'>
+                                <img style="width:30px;height:30px;" src="images\bin.png"></img>
+                                <span class="mytooltiptext">DELETE POST</span>
+                            </a>
+                        </span>
+                        <span th:unless="${@postController.isMembersPost(post.getMember().getId())}">
+                            --------
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="foundposts">
+    <h2 style="color: white;" class="content">Posts:</h2>
+    <div class="container">
+        <div class="row" th:each="post: ${@ps.findPosts(@postController.getSearchText())}">
+            <div class="container">
+                <div class="row" id="rowFoundPost">
+                    <div class="col-sm-1">
+                        <span style="font-size: medium; color: white"
+                              th:text="${post.getMember().getUsername()}"></span>
+                    </div>
+
                     <div class="col-sm-6">
                         <div class="row" style="color: white">
                             <span th:text="${#dates.format(post.creationDate, 'MM/dd/yyyy')}"></span>
@@ -289,9 +386,11 @@
                             </a>
                         </span>
                     </div>
+
                     <div class="col-sm-3" style="color: white">
                         <span><span th:text="${@ps.getLikesCount(post)}"></span> people has liked this post.</span>
                     </div>
+
                     <div class="col-xs">
                         <span th:if="${@postController.isMembersPost(post.getMember().getId())}">
                             <a style="color:red" class="mytooltip" th:href='${"/editpost?id="+post.id}'>
@@ -299,7 +398,11 @@
                                 <span class="mytooltiptext">EDIT POST</span>
                             </a>
                         </span>
+                        <span th:unless="${@postController.isMembersPost(post.getMember().getId())}">
+                            --------
+                        </span>
                     </div>
+
                     <div class="col-xs">
                         <span th:if="${@postController.isMembersPost(post.getMember().getId())}">
                             <a style="color:red" class="mytooltip" th:href='${"/deletepost?id="+post.id}'>
@@ -307,60 +410,9 @@
                                 <span class="mytooltiptext">DELETE POST</span>
                             </a>
                         </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div th:fragment="foundposts">
-    <h2 style="color: white;" class="content">Posts:</h2>
-    <div class="container">
-        <div class="row" th:each="post: ${@ps.findPosts(@postController.getSearchText())}">
-            <div class="container">
-                <div class="row" id="rowFoundPost">
-                    <div class="col-sm-2">
-                        <span style="font-size: medium; color: white"
-                              th:text="${post.getMember().getUsername()}"></span>
-                    </div>
-                    <div class="col-sm-5">
-                        <div class="row" style="color: white">
-                            <span th:text="${#dates.format(post.creationDate, 'MM/dd/yyyy')}"></span>
-                        </div>
-                        <div class="row" style="color: white">
-                            <span th:text="${post.content}"></span></div>
-                    </div>
-                    <div class="col-sm-1">
-                        <span th:if="${@postController.isMembersPost(post.getMember().getId())}">
-                            <a style="color:red" class="mytooltip" th:href='${"/editpost?id="+post.id}'>EDIT
-                                <span class="mytooltiptext">EDIT POST</span>
-                            </a>
+                        <span th:unless="${@postController.isMembersPost(post.getMember().getId())}">
+                            --------
                         </span>
-                    </div>
-                    <div class="col-sm-1">
-                        <span th:if="${@postController.isMembersPost(post.getMember().getId())}">
-                            <a style="color:red" class="mytooltip" th:href='${"/deletepost?id="+post.id}'>DEL
-                                <span class="mytooltiptext">DELETE POST</span>
-                            </a>
-                        </span>
-                    </div>
-                    <div class="col-sm-1">
-                        <span th:if="${@postController.isMemberLogged()}">
-                            <span th:unless="${@postController.hasMemberLiked(post.id)}">
-                                <a style="color:red" class="mytooltip" th:href='${"/likepost?id="+post.id}'>LIKE
-                                    <span class="mytooltiptext">LIKE POST</span>
-                                </a>
-                            </span>
-                        </span>
-                        <span th:if="${@postController.hasMemberLiked(post.id)}">
-                            <a style="color:red" class="mytooltip" th:href='${"/unlikepost?id="+post.id}'>UNLIKE
-                                <span class="mytooltiptext">UNLIKE POST</span>
-                            </a>
-                        </span>
-                    </div>
-                    <div class="col-sm-1" style="color: white">
-                        <span>Likes: </span><span th:text="${@ps.getLikesCount(post)}"> </span>
                     </div>
                 </div>
             </div>
@@ -372,8 +424,12 @@
     <form action="/addcategory" method="post"> <!-- method post - NOT show password in URL -->
         <div class="container">
             <div style="margin-top:15px;" class="row">
-                <div style="margin-left:135px;" class="col-sm-2">
-                    <input type="text" style="height:41px;" name="name" required="required" placeholder="Name of new category.."/>
+                <div class="col-sm-4">
+
+                </div>
+                <div class="col-sm-2">
+                    <input type="text" style="height:41px;" name="name" required="required"
+                           placeholder="New category.."/>
                 </div>
                 <div class="col-sm-2">
                     <input type="submit" id="button7"
@@ -563,42 +619,84 @@
 
 <div th:fragment="members">
     <h2 style="color: white;" class="content">Members:</h2>
-    <table class="commentBig" style="width: 40%; table-layout: fixed;">
-        <tr>
-            <td style="padding: 0px;">
+    <div class="container">
+        <div class="row" id="rowMember">
+            <div class="col-sm-4">
+                <span style="font-size:1.4rem;">USERNAME</span>
+            </div>
 
-                <table class="comment" style="width: 100%; table-layout: fixed;"
-                       th:each="member: ${@ms.getMembers()}">
-                    <tr>
-                        <td><span th:text="${member.username}"></span></td>
-                        <td><span th:text="${member.email}"></span></td>
-                        <td><span th:text="${member.rank}"></span></td>
-                        <td>
-                        <span>
-                            <a class="mytooltip"
-                               th:href='${"/banmember?id="+member.id}'>X
-                                <span class="mytooltiptext">BAN THIS MEMBER</span></a>
+            <div class="col-sm-4">
+                <span style="font-size:20px;">EMAIL</span>
+            </div>
+
+            <div class="col-sm-3">
+                <span style="font-size:20px;">RANK</span>
+            </div>
+
+            <div class="col-xs">
+
+            </div>
+
+            <div class="col-xs">
+
+            </div>
+
+            <div class="col-xs">
+
+            </div>
+
+        </div>
+
+        <div class="row" th:each="member: ${@ms.getMembers()}" id="rowMember2">
+            <div class="col-sm-4">
+                <span th:text="${member.username}"></span>
+            </div>
+
+            <div class="col-sm-4">
+                <span th:text="${member.email}"></span>
+            </div>
+
+            <div class="col-sm-3">
+                <span th:text="${member.rank}"></span>
+            </div>
+
+            <div class="col-xs">
+
+                <span th:if="${@postController.isMemberLogged()}">
+                            <span th:unless="${@memberController.isBanned(member.id)}">
+                                <a style="color:red" class="mytooltip" th:href='${"/banmember?id="+member.id}'>
+                                    <img style="width:30px;height:30px;" src="images\unban.png"></img>
+                                    <span class="mytooltiptext">BAN THIS MEMBER</span>
+                                </a>
+                            </span>
                         </span>
-                        </td>
-                        <td>
-                        <span>
-                            <a class="mytooltip"
-                               th:href='${"/promotemember?id="+member.id}'>↑
-                                <span class="mytooltiptext">PROMOTE TO ADMIN</span></a>
+                <span th:if="${@memberController.isBanned(member.id)}">
+                            <a style="color:red" class="mytooltip" th:href='${"/banmember?id="+member.id}'>
+                                <img style="width:30px;height:30px;" src="images\ban.png"></img>
+                                <span class="mytooltiptext">UNBAN THIS MEMBER</span>
+                            </a>
                         </span>
-                        </td>
-                        <td>
-                        <span>
-                            <a class="mytooltip"
-                               th:href='${"/deletemember?id="+member.id}'>DEL
-                                <span class="mytooltiptext">DELETE MEMBER ACCOUNT</span></a>
-                        </span>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
+            </div>
+
+            <div class="col-xs">
+                            <span>
+                                <a class="mytooltip" th:href='${"/promotemember?id="+member.id}'>
+                                    <img style="width:30px;height:30px;" src="images\promote.png"></img>
+                                    <span class="mytooltiptext">PROMOTE TO ADMIN</span>
+                                </a>
+                            </span>
+            </div>
+
+            <div class="col-xs">
+                            <span>
+                                <a class="mytooltip" th:href='${"/deletemember?id="+member.id}'>
+                                    <img style="width:30px;height:30px;" src="images\bin.png"></img>
+                                <span class="mytooltiptext">DELETE MEMBER ACCOUNT</span>
+                                </a>
+                            </span>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>
