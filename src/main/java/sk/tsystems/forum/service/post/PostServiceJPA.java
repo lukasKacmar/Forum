@@ -5,6 +5,7 @@ import sk.tsystems.forum.entity.Post;
 import sk.tsystems.forum.entity.Topic;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -15,10 +16,13 @@ public class PostServiceJPA implements PostService {
     @PersistenceContext
     private EntityManager em;
 
-
     @Override
     public void addPost(Post post) {
-        em.persist(post);
+        try {
+            em.persist(post);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
@@ -29,27 +33,31 @@ public class PostServiceJPA implements PostService {
 
     @Override
     public Post getPost(long id) {
-        Post p = em
-                .createQuery("SELECT p FROM Post p WHERE p.id = :id", Post.class)
-                .setParameter("id", id)
-                .getSingleResult();
-        return p;
+        try {
+            return em
+                    .createQuery("SELECT p FROM Post p WHERE p.id = :id", Post.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
     @Override
     public List<Post> getPosts(Topic topic) {
-        List<Post> posts = em
-                .createQuery("SELECT p FROM Post p WHERE p.topic = :topic ORDER BY creation_date")
-                .setParameter("topic", topic)
-                .getResultList();
-        return posts;
+        try {
+            return em
+                    .createQuery("SELECT p FROM Post p WHERE p.topic = :topic ORDER BY creation_date")
+                    .setParameter("topic", topic)
+                    .getResultList();
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
     @Override
     public long getCount(Topic topic) {
-
-        long replies;
-        replies = ((long) em
+        long replies = ((long) em
                 .createQuery("SELECT COUNT(*) FROM Post p WHERE p.topic = :topic")
                 .setParameter("topic", topic)
                 .getSingleResult());

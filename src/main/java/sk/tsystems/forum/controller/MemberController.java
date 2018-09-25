@@ -8,9 +8,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
 import sk.tsystems.forum.entity.Member;
+import sk.tsystems.forum.entity.Post;
 import sk.tsystems.forum.entity.Rank;
 import sk.tsystems.forum.entity.Section;
 import sk.tsystems.forum.service.member.MemberService;
+import sk.tsystems.forum.service.post.PostService;
+import sk.tsystems.forum.service.post.PostServiceJPA;
+
+import java.util.List;
 
 @Controller
 @Scope(WebApplicationContext.SCOPE_SESSION)
@@ -59,27 +64,39 @@ public class MemberController {
 
     @RequestMapping("/registermember")
     public String register(Member member, Model model) {
+        if(member.getEmail() != null && member.getUsername() != null && member.getPassword() != null) {
+            boolean invalidForm = false;
 
-        // todo check password
+            if(member.getEmail().equals("") || ms.emailExists(member.getEmail())) {
+                invalidForm = true;
+                model.addAttribute("emailMessage", "Invalid Email!");
+            }
 
-        if(ms.emailExists(member.getEmail())) {
-            model.addAttribute("emailMessage", "Invalid Email!");
-            return "registermember";
+            if(member.getUsername().equals("") || ms.usernameExists(member.getUsername())) {
+                invalidForm = true;
+                model.addAttribute("usernameMessage", "Invalid Username!");
+            }
+
+            if(member.getPassword().equals("")) {
+                invalidForm = true;
+                model.addAttribute("passwordMessage", "Invalid Password!");
+            }
+            else if (member.validatePassword()) {
+                invalidForm = true;
+                model.addAttribute("passwordMessage", "Password doesn't match!");
+            }
+
+            if(invalidForm) {
+                return "registermember";
+            }
+            else {
+                member.setRank(Rank.GENERAL);
+                ms.register(member);
+                loggedMember = ms.login(member.getUsername(), member.getPassword());
+                return "redirect:/";
+            }
         }
 
-        if(ms.usernameExists(member.getUsername())) {
-            model.addAttribute("usernameMessage", "Invalid Username!");
-            return "registermember";
-        }
-
-        if (member.getUsername() != null) {
-            member.setRank(Rank.GENERAL);
-            ms.register(member);
-            loggedMember = ms.login(member.getUsername(), member.getPassword());
-            return "redirect:/";
-        }
-
-        model.addAttribute("passwordMessage", "Password doesn't match!");
         return "registermember";
     }
 
