@@ -4,6 +4,7 @@ import sk.tsystems.forum.entity.Section;
 import sk.tsystems.forum.entity.Topic;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -16,7 +17,11 @@ public class TopicServiceJPA implements TopicService {
 
     @Override
     public void addTopic(Topic topic) {
-        em.persist(topic);
+        try {
+            em.persist(topic);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
@@ -26,20 +31,26 @@ public class TopicServiceJPA implements TopicService {
 
     @Override
     public Topic getTopic(Long id) {
-        Topic t = em
-                .createQuery("SELECT t FROM Topic t WHERE t.id = :id", Topic.class)
-                .setParameter("id", id)
-                .getSingleResult();
-        return t;
+        try {
+            return em
+                    .createQuery("SELECT t FROM Topic t WHERE t.id = :id", Topic.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
     @Override
     public List<Topic> getTopics(Section section) {
-        List<Topic> topics = em
-                .createQuery("SELECT t FROM Topic t WHERE t.section = :section")
-                .setParameter("section", section)
-                .getResultList();
-        return topics;
+        try {
+            return em
+                    .createQuery("SELECT t FROM Topic t WHERE t.section = :section")
+                    .setParameter("section", section)
+                    .getResultList();
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
     @Override
@@ -52,10 +63,14 @@ public class TopicServiceJPA implements TopicService {
 
     @Override
     public long getCount(Section section) {
-        return (long) em
-                .createQuery("SELECT COUNT(*) FROM Topic t WHERE t.section = :section")
-                .setParameter("section", section)
-                .getSingleResult();
+        try {
+            return (long) em
+                    .createQuery("SELECT COUNT(*) FROM Topic t WHERE t.section = :section")
+                    .setParameter("section", section)
+                    .getSingleResult();
+        } catch (NoResultException ex) {
+            return 0;
+        }
     }
 
     @Override

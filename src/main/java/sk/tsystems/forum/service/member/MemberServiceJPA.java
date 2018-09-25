@@ -11,12 +11,20 @@ import java.util.List;
 @Transactional
 public class MemberServiceJPA implements MemberService {
 
+    // todo header
+    // todo footer
+    // todo search
+
     @PersistenceContext
     private EntityManager em;
 
     @Override
     public void register(Member member) {
-        em.persist(member);
+        try {
+            em.persist(member);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
@@ -46,16 +54,18 @@ public class MemberServiceJPA implements MemberService {
 
     @Override
     public List<Member> getMembers() {
-        List<Member> members = em
-                .createQuery("SELECT m FROM Member m WHERE (rank='BANNED') OR (rank='GENERAL') ORDER BY username")
-                .getResultList();
-        return members;
+        try {
+            return em
+                    .createQuery("SELECT m FROM Member m WHERE (rank='BANNED') OR (rank='GENERAL') ORDER BY username")
+                    .getResultList();
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
     @Override
     public void deleteMember(long id) {
-        Member m = null;
-        m = em
+        Member m = em
                 .createQuery("SELECT m FROM Member m WHERE m.id = :id", Member.class)
                 .setParameter("id", id)
                 .getSingleResult();

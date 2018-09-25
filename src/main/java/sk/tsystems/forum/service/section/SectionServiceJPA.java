@@ -4,6 +4,7 @@ import sk.tsystems.forum.entity.Category;
 import sk.tsystems.forum.entity.Section;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -11,13 +12,16 @@ import java.util.List;
 @Transactional
 public class SectionServiceJPA implements SectionService {
 
-
     @PersistenceContext
     private EntityManager em;
 
     @Override
     public void addSection(Section section) {
-        em.persist(section);
+        try {
+            em.persist(section);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
@@ -27,35 +31,43 @@ public class SectionServiceJPA implements SectionService {
 
     @Override
     public Section getSection(long id) {
-        Section s = em
-                .createQuery("SELECT s FROM Section s WHERE s.id= :id", Section.class)
-                .setParameter("id", id)
-                .getSingleResult();
-        return s;
+        try {
+            return em
+                    .createQuery("SELECT s FROM Section s WHERE s.id= :id", Section.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
     @Override
     public List<Section> getSections() {
-        List<Section> sections = em
-                .createQuery("SELECT s FROM Section s")
-                .getResultList();
-        return sections;
+        try {
+            return em
+                    .createQuery("SELECT s FROM Section s")
+                    .getResultList();
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
 
     @Override
     public List<Section> getSections(Category category) {
-        List<Section> sections = em
-                .createQuery("SELECT s FROM Section s WHERE s.category = :category")
-                .setParameter("category", category)
-                .getResultList();
-        return sections;
+        try {
+            return em
+                    .createQuery("SELECT s FROM Section s WHERE s.category = :category")
+                    .setParameter("category", category)
+                    .getResultList();
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
     @Override
     public void deleteSection(long id) {
-        Section s = null;
-        s = em
+        Section s = em
                 .createQuery("SELECT s FROM Section s WHERE s.id = :id", Section.class)
                 .setParameter("id", id)
                 .getSingleResult();
@@ -66,24 +78,34 @@ public class SectionServiceJPA implements SectionService {
 
     @Override
     public void addCategory(Category category) {
-        em.persist(category);
+        try {
+            em.persist(category);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
     public Category getCategory(long id) {
-        Category c = em
-                .createQuery("SELECT c FROM Category c WHERE c.id= :id", Category.class)
-                .setParameter("id", id)
-                .getSingleResult();
-        return c;
+        try {
+            return em
+                    .createQuery("SELECT c FROM Category c WHERE c.id= :id", Category.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
     @Override
     public List<Category> getCategories() {
-        List<Category> categories = em
-                .createQuery("SELECT c FROM Category c")
-                .getResultList();
-        return categories;
+        try {
+            return em
+                    .createQuery("SELECT c FROM Category c")
+                    .getResultList();
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
     @Override

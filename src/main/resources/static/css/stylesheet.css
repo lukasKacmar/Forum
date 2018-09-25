@@ -233,7 +233,6 @@ h4 {
     position: relative;
     display: inline-block;
     color:red;
-
 }
 
 /* Tooltip text */
@@ -267,7 +266,6 @@ a:link, a:visited {
 
 a:link:hover, a:visited:hover {
 	font-weight: bold;
-
 }
 
 a.white {
@@ -349,5 +347,21 @@ body {
    height:30px;   /* Height of the footer */
    background-color: rgba(0, 0, 0, 0.3);
    text-align: center;
+}
 
+input[type=text],
+input[type=password]{
+    width:100%;
+    border:2px solid #aaa;
+    border-radius:4px;
+    outline:none;
+    padding:8px;
+    box-sizing:border-box;
+    transition:.3s;
+}
+
+input[type=text]:focus,
+input[type=password]:focus{
+    border-color:dodgerBlue;
+    box-shadow:0 0 8px 0 dodgerBlue;
 }
