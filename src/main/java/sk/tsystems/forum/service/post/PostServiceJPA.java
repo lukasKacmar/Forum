@@ -46,6 +46,7 @@ public class PostServiceJPA implements PostService {
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Post> getPosts(Topic topic) {
         try {
@@ -158,6 +159,7 @@ public class PostServiceJPA implements PostService {
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Post> findPosts(String searchText) {
         try {

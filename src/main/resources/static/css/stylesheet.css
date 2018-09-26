@@ -267,6 +267,7 @@ body {
 }
 
 input[type=text],
+input[type=number],
 input[type=password]{
     width:100%;
     border:2px solid #aaa;
@@ -278,9 +279,16 @@ input[type=password]{
 }
 
 input[type=text]:focus,
+input[type=number]:focus,
 input[type=password]:focus{
     border-color: #364866;
     box-shadow:0 0 8px 0 #364866;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+  margin: 0;
 }
 
 hr {

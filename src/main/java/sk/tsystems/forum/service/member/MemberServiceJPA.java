@@ -48,6 +48,7 @@ public class MemberServiceJPA implements MemberService {
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Member> getMembers() {
         try {

@@ -18,7 +18,7 @@ public class Category implements Serializable {
     private String name;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.PERSIST, orphanRemoval = true)
-    private List<Section> sections = new ArrayList<Section>();
+    private List<Section> sections = new ArrayList<>();
 
     public Category() {
     }

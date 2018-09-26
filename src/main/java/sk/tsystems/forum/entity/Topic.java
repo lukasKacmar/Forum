@@ -22,7 +22,7 @@ public class Topic implements Serializable {
     private Section section;
 
     @OneToMany(mappedBy = "topic", cascade = CascadeType.PERSIST, orphanRemoval = true)
-    private List<Post> posts = new ArrayList<Post>();
+    private List<Post> posts = new ArrayList<>();
 
     @Column(length = 100)
     private String title;

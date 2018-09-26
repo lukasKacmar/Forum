@@ -22,7 +22,7 @@ public class Post implements Serializable {
     private Member member;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.PERSIST, orphanRemoval = true)
-    private List<Like> likes = new ArrayList<Like>();
+    private List<Like> likes = new ArrayList<>();
 
     @Column(columnDefinition = "TEXT")
     private String content;

@@ -21,14 +21,17 @@ public class Member implements Serializable {
     @Column(length = 20, nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST, orphanRemoval = true)
-    private List<Topic> topics = new ArrayList<Topic>();
+    @Column()
+    private int age;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST, orphanRemoval = true)
-    private List<Post> posts = new ArrayList<Post>();
+    private List<Topic> topics = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST, orphanRemoval = true)
-    private List<Like> likes = new ArrayList<Like>();
+    private List<Post> posts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private List<Like> likes = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private Rank rank;
@@ -45,6 +48,14 @@ public class Member implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public String getEmail() {

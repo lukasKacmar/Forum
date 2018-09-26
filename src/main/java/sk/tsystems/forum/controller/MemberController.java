@@ -71,6 +71,11 @@ public class MemberController {
                 model.addAttribute("usernameMessage", "Invalid Username!");
             }
 
+            if(member.getAge() < 18) {
+                invalidForm = true;
+                model.addAttribute("ageMessage", "Invalid Age!");
+            }
+
             if(member.getPassword().equals("")) {
                 invalidForm = true;
                 model.addAttribute("passwordMessage", "Invalid Password!");

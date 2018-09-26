@@ -45,6 +45,7 @@ public class SectionServiceJPA implements SectionService {
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Section> getSections() {
         try {
@@ -57,6 +58,7 @@ public class SectionServiceJPA implements SectionService {
     }
 
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Section> getSections(Category category) {
         try {
@@ -108,6 +110,7 @@ public class SectionServiceJPA implements SectionService {
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Category> getCategories() {
         try {

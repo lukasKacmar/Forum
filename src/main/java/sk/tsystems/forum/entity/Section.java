@@ -20,7 +20,7 @@ public class Section implements Serializable {
     private String description;
 
     @OneToMany(mappedBy = "section", cascade = CascadeType.PERSIST, orphanRemoval = true)
-    private List<Topic> topics = new ArrayList<Topic>();
+    private List<Topic> topics = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(foreignKey = @ForeignKey(name = "member_id", value = ConstraintMode.CONSTRAINT))

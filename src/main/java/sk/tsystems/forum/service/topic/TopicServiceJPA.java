@@ -45,6 +45,7 @@ public class TopicServiceJPA implements TopicService {
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Topic> getTopics(Section section) {
         try {
@@ -57,6 +58,7 @@ public class TopicServiceJPA implements TopicService {
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Topic> findTopics(String searchText) {
         try {

@@ -67,7 +67,7 @@
             <div class="col-xs">
                 <span th:if="${@memberController.admin}" style="margin-left:10px;" id="categoryIndex2">
                 <a class="mytooltip" th:href='${"/category?id="+category.id}' style="color:white;">
-                    <img style="width:30px;height:30px;" src="images\manage.png"></img>
+                    <img style="width:30px;height:30px;" src="images\manage.png"/>
                     <span class="mytooltiptext">MANAGE THIS CATEGORY</span>
                 </a>
                 </span>
@@ -76,7 +76,7 @@
             <div class="col-xs">
                 <span th:if="${@memberController.admin}" style="margin-left:10px;" id="categoryIndex3">
                 <a class="mytooltip" th:href='${"/deletecategory?id="+category.id}' style="color:white;">
-                    <img style="width:30px;height:30px;" src="images\bin.png"></img>
+                    <img style="width:30px;height:30px;" src="images\bin.png"/>
                     <span class="mytooltiptext">DELETE CATEGORY</span>
                 </a>
                 </span>
@@ -182,7 +182,7 @@
              th:each="topic: ${@ts.getTopics(@sectionController.getCurrentSection())}">
 
             <div class="col-xs-1">
-                <img style="width:30px;height:30px;" src="images\topic3.png"></img>
+                <img style="width:30px;height:30px;" src="images\topic3.png"/>
             </div>
             <div class="col-sm-5">
                 <a class="mytooltip" th:href='${"/topic?id="+topic.id}'>
@@ -194,7 +194,7 @@
             </div>
 
             <div class="col-sm">
-                <span><img style="width:30px;height:30px;" src="images\reply.png"></img> </span>
+                <span><img style="width:30px;height:30px;" src="images\reply.png"/></span>
                 <span style="font-size:medium;" th:text="${@ps.getCount(topic)}"> </span>
             </div>
             <div class="col-sm-2">
@@ -213,7 +213,7 @@
             <div class="col-xs">
                 <span th:if="${@topicController.isMembersTopic(topic.getMember().getId())}">
                     <a class="mytooltip" style="color:red" th:href='${"/edittopic?id="+topic.id}'>
-                        <img style="width:30px;height:30px;" src="images\edit.png"></img>
+                        <img style="width:30px;height:30px;" src="images\edit.png"/>
                         <span class="mytooltiptext">EDIT TOPIC</span>
                     </a>
                 </span>
@@ -224,7 +224,7 @@
             <div class="col-xs">
                 <span th:if="${@topicController.isMembersTopic(topic.getMember().getId())}">
                     <a class="mytooltip" style="color:red" th:href='${"/deletetopic?id="+topic.id}'>
-                        <img style="width:30px;height:30px;" src="images\bin.png"></img>
+                        <img style="width:30px;height:30px;" src="images\bin.png"/>
                         <span class="mytooltiptext">DELETE TOPIC</span>
                     </a>
                 </span>
@@ -244,7 +244,7 @@
              th:each="topic: ${@ts.findTopics(@postController.getSearchText())}">
 
             <div class="col-xs-1">
-                <img style="width:30px;height:30px;" src="images\topic3.png"></img>
+                <img style="width:30px;height:30px;" src="images\topic3.png"/>
             </div>
             <div class="col-sm-5">
                 <a class="mytooltip" th:href='${"/topic?id="+topic.id}'>
@@ -256,7 +256,7 @@
             </div>
 
             <div class="col-sm">
-                <span><img style="width:30px;height:30px;" src="images\reply.png"></img> </span><span
+                <span><img style="width:30px;height:30px;" src="images\reply.png"/></span><span
                     th:text="${@ps.getCount(topic)}"> </span>
             </div>
             <div class="col-sm-2">
@@ -268,7 +268,7 @@
             <div class="col-xs">
                 <span th:if="${@topicController.isMembersTopic(topic.getMember().getId())}">
                     <a class="mytooltip" style="color:red" th:href='${"/edittopic?id="+topic.id}'>
-                        <img style="width:30px;height:30px;" src="images\edit.png"></img>
+                        <img style="width:30px;height:30px;" src="images\edit.png"/>
                         <span class="mytooltiptext">EDIT TOPIC</span>
                     </a>
                 </span>
@@ -279,7 +279,7 @@
             <div class="col-xs">
                 <span th:if="${@topicController.isMembersTopic(topic.getMember().getId())}">
                     <a class="mytooltip" style="color:red" th:href='${"/deletetopic?id="+topic.id}'>
-                        <img style="width:30px;height:30px;" src="images\bin.png"></img>
+                        <img style="width:30px;height:30px;" src="images\bin.png"/>
                         <span class="mytooltiptext">DELETE TOPIC</span>
                     </a>
                 </span>
@@ -313,14 +313,14 @@
                         <span th:if="${@postController.isMemberLogged()}">
                             <span th:unless="${@postController.hasMemberLiked(post.id)}">
                                 <a style="color:red" class="mytooltip" th:href='${"/likepost?id="+post.id}'>
-                                    <img style="width:30px;height:30px;" src="images\like.png"></img>
+                                    <img style="width:30px;height:30px;" src="images\like.png"/>
                                     <span class="mytooltiptext">LIKE POST</span>
                                 </a>
                             </span>
                         </span>
                         <span th:if="${@postController.hasMemberLiked(post.id)}">
                             <a style="color:red" class="mytooltip" th:href='${"/unlikepost?id="+post.id}'>
-                                <img style="width:30px;height:30px;" src="images\unlike.png"></img>
+                                <img style="width:30px;height:30px;" src="images\unlike.png"/>
                                 <span class="mytooltiptext">UNLIKE POST</span>
                             </a>
                         </span>
@@ -333,7 +333,7 @@
                     <div class="col-xs">
                         <span th:if="${@postController.isMembersPost(post.getMember().getId())}">
                             <a style="color:red" class="mytooltip" th:href='${"/editpost?id="+post.id}'>
-                                <img style="width:30px;height:30px;" src="images\edit.png"></img>
+                                <img style="width:30px;height:30px;" src="images\edit.png"/>
                                 <span class="mytooltiptext">EDIT POST</span>
                             </a>
                         </span>
@@ -344,7 +344,7 @@
                     <div class="col-xs">
                         <span th:if="${@postController.isMembersPost(post.getMember().getId())}">
                             <a style="color:red" class="mytooltip" th:href='${"/deletepost?id="+post.id}'>
-                                <img style="width:30px;height:30px;" src="images\bin.png"></img>
+                                <img style="width:30px;height:30px;" src="images\bin.png"/>
                                 <span class="mytooltiptext">DELETE POST</span>
                             </a>
                         </span>
@@ -381,14 +381,14 @@
                         <span th:if="${@postController.isMemberLogged()}">
                             <span th:unless="${@postController.hasMemberLiked(post.id)}">
                                 <a style="color:red" class="mytooltip" th:href='${"/likepost?id="+post.id}'>
-                                    <img style="width:30px;height:30px;" src="images\like.png"></img>
+                                    <img style="width:30px;height:30px;" src="images\like.png"/>
                                     <span class="mytooltiptext">LIKE POST</span>
                                 </a>
                             </span>
                         </span>
                         <span th:if="${@postController.hasMemberLiked(post.id)}">
                             <a style="color:red" class="mytooltip" th:href='${"/unlikepost?id="+post.id}'>
-                                <img style="width:30px;height:30px;" src="images\unlike.png"></img>
+                                <img style="width:30px;height:30px;" src="images\unlike.png"/>
                                 <span class="mytooltiptext">UNLIKE POST</span>
                             </a>
                         </span>
@@ -401,7 +401,7 @@
                     <div class="col-xs">
                         <span th:if="${@postController.isMembersPost(post.getMember().getId())}">
                             <a style="color:red" class="mytooltip" th:href='${"/editpost?id="+post.id}'>
-                                <img style="width:30px;height:30px;" src="images\edit.png"></img>
+                                <img style="width:30px;height:30px;" src="images\edit.png"/>
                                 <span class="mytooltiptext">EDIT POST</span>
                             </a>
                         </span>
@@ -413,7 +413,7 @@
                     <div class="col-xs">
                         <span th:if="${@postController.isMembersPost(post.getMember().getId())}">
                             <a style="color:red" class="mytooltip" th:href='${"/deletepost?id="+post.id}'>
-                                <img style="width:30px;height:30px;" src="images\bin.png"></img>
+                                <img style="width:30px;height:30px;" src="images\bin.png"/>
                                 <span class="mytooltiptext">DELETE POST</span>
                             </a>
                         </span>
@@ -672,14 +672,14 @@
                 <span th:if="${@postController.isMemberLogged()}">
                             <span th:unless="${@memberController.isBanned(member.id)}">
                                 <a style="color:red" class="mytooltip" th:href='${"/banmember?id="+member.id}'>
-                                    <img style="width:30px;height:30px;" src="images\unban.png"></img>
+                                    <img style="width:30px;height:30px;" src="images\unban.png"/>
                                     <span class="mytooltiptext">BAN THIS MEMBER</span>
                                 </a>
                             </span>
                         </span>
                 <span th:if="${@memberController.isBanned(member.id)}">
                             <a style="color:red" class="mytooltip" th:href='${"/banmember?id="+member.id}'>
-                                <img style="width:30px;height:30px;" src="images\ban.png"></img>
+                                <img style="width:30px;height:30px;" src="images\ban.png"/>
                                 <span class="mytooltiptext">UNBAN THIS MEMBER</span>
                             </a>
                         </span>
@@ -688,7 +688,7 @@
             <div class="col-xs">
                             <span>
                                 <a class="mytooltip" th:href='${"/promotemember?id="+member.id}'>
-                                    <img style="width:30px;height:30px;" src="images\promote.png"></img>
+                                    <img style="width:30px;height:30px;" src="images\promote.png"/>
                                     <span class="mytooltiptext">PROMOTE TO ADMIN</span>
                                 </a>
                             </span>
@@ -697,7 +697,7 @@
             <div class="col-xs">
                             <span>
                                 <a class="mytooltip" th:href='${"/deletemember?id="+member.id}'>
-                                    <img style="width:30px;height:30px;" src="images\bin.png"></img>
+                                    <img style="width:30px;height:30px;" src="images\bin.png"/>
                                 <span class="mytooltiptext">DELETE MEMBER ACCOUNT</span>
                                 </a>
                             </span>
