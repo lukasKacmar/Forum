@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 @Transactional
@@ -164,6 +165,28 @@ public class PostServiceJPA implements PostService {
                     .createQuery("SELECT p FROM Post p WHERE p.content LIKE :searchText")
                     .setParameter("searchText", "%" + searchText + "%")
                     .getResultList();
+        } catch (NoResultException ex) {
+            return null;
+        }
+    }
+
+    @Override
+    public Date getLastPostDate(Topic topic){
+//        List<Post> posts;
+//        try {
+//            posts = em
+//                    .createQuery("SELECT p FROM Post p WHERE p.topic = :topic ORDER BY creation_date DESC")
+//                    .setParameter("topic", topic)
+//                    .getResultList();
+//        } catch (NoResultException ex) {
+//            return null;
+//        }
+//        return posts.get(0).getCreationDate();
+        try {
+            return (Date)em
+                    .createQuery("SELECT MAX(p.creationDate) FROM Post p WHERE p.topic = :topic")
+                    .setParameter("topic", topic)
+                    .getSingleResult();
         } catch (NoResultException ex) {
             return null;
         }

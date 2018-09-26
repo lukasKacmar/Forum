@@ -10,26 +10,34 @@
     <title>Section</title>
 </head>
 <body bgcolor="white">
-<div id="content">
-    <h1 style="color: white;">ADMIN panel!</h1>
-    <div th:unless="${@memberController.logged}">
-        <a class="white" href="/loginmember">Login</a> or <a class="white"
-                                                             href="/registermember">Register</a>
-    </div>
-    <div th:if="${@memberController.logged}">
-			<span th:if="${@memberController.logged}"> You are logged as <a class="white" href="/"
-                                                                            th:text="${@memberController.loggedUsername}"></a><span>.</span> <a
-                    class="white" href="/logoutmember">Logout</a>
-			</span>
+<div th:replace="fragments::header"></div>
+<br/>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-2">
+            <a class="white" href="/">
+                <b>
+                    <span style="color:white;">
+                        <span th:text="${@sectionController.currentCategoryName}"></span>
+                    </span>
+                </b>
+            </a>
+        </div>
+
+        <div class="col-xs-1">
+            <span style="color:white;">></span>
+        </div>
+
+        <div class="col-sm-2">
+            <a class="white"><span>Sections</span></a>
+        </div>
+
     </div>
 </div>
-
+<br/>
 <div th:replace="fragments::categorySections"></div>
 <div th:if="${@memberController.admin}">
     <span th:replace="fragments::addsection"></span>
-</div>
-<div th:if="${@memberController.admin}">
-    <div th:replace="fragments::members"></div>
 </div>
 <div th:replace="fragments::footer"></div>
 </body>

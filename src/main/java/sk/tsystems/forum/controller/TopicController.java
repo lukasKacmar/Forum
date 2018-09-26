@@ -7,7 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
 import sk.tsystems.forum.entity.Topic;
+import sk.tsystems.forum.service.post.PostService;
 import sk.tsystems.forum.service.topic.TopicService;
+
+import java.util.Date;
 
 
 @Controller
@@ -16,6 +19,9 @@ public class TopicController {
 
     @Autowired
     private TopicService ts;
+
+    @Autowired
+    private PostService ps;
 
     @Autowired
     private MemberController mc;
@@ -78,7 +84,15 @@ public class TopicController {
         this.currentTopic = currentTopic;
     }
 
+    public String getCurrentTopicName(){
+        return currentTopic.getTitle();
+    }
+
     public long getCurrentTopicId(){
         return currentTopic.getId();
+    }
+
+    public Date getLastPostDate(Topic topic){
+        return ps.getLastPostDate(topic);
     }
 }

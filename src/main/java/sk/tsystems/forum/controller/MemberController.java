@@ -108,21 +108,26 @@ public class MemberController {
         } else{
             m.setRank(Rank.GENERAL);
         }
-        return "adminpanel";
+        return "realadminpanel";
     }
 
     @RequestMapping("/promotemember")
     public String promoteMember(long id){
         Member m = ms.getMember(id);
         m.setRank(Rank.ADMIN);
-        return "adminpanel";
+        return "realadminpanel";
     }
 
     @RequestMapping("/deletemember")
     public String deleteMember(long id){
         Member m = ms.getMember(id);
         m.setRank(Rank.DELETED);
-        return "adminpanel";
+        return "realadminpanel";
+    }
+
+    @RequestMapping("/accessadminpanel")
+    public String accessAdminPanel(){
+        return "realadminpanel";
     }
 
     public Member getLoggedMember() {
@@ -154,5 +159,9 @@ public class MemberController {
 
     public boolean isDeleted(Member member){
         return member.getRank() == Rank.DELETED;
+    }
+
+    public boolean isBanned(long id){
+        return ms.getMember(id).getRank() == Rank.BANNED;
     }
 }

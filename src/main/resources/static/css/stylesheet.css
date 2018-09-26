@@ -13,6 +13,14 @@
 	margin: 0px 0px 10px 0px;
 }
 
+
+#header {
+    background: url('../images/ocean.jpg');
+    background-size: cover;
+    padding-bottom: 20px;
+    padding-top: 60px;
+}
+
 body {
 	background-color: #364866;
 	background-size: cover;
@@ -31,6 +39,7 @@ h1 {
 	margin: 0px;
 	padding: 0px;
 	color: white;
+	text-align:center
 }
 
 h2 {
@@ -70,84 +79,17 @@ h4 {
 
 }
 
-#rowBootstrap {
+#rowBootstrap, #rowBootstrap2, #rowPost, #rowFoundPost, #rowAddTopic, #rowEditTopic, #rowAddPost, #rowAddSection, #rowEditSection, #rowEditPost, #categorySection, #rowMember, #rowMember2 {
     background-color: rgb(255, 255, 255, .1);
     margin: 5px;
     padding: 2px;
     border-radius: 0.3rem;
+    border-style:solid;
+    border-color:silver;
+    border-width:1px;
 }
 
-#rowBootstrap2 {
-    background-color: rgb(255, 255, 255, .1);
-    margin: 5px;
-    padding: 2px;
-    border-radius: 0.3rem;
-}
-
-#rowPost {
-    background-color: rgb(255, 255, 255, .1);
-    margin: 5px;
-    padding: 2px;
-    border-radius: 0.3rem;
-}
-
-#rowFoundPost {
-    background-color: rgb(255, 255, 255, .1);
-    margin: 5px;
-    padding: 2px;
-    border-radius: 0.3rem;
-}
-
-#rowAddTopic {
-    background-color: rgb(255, 255, 255, .1);
-    margin: 5px;
-    padding: 2px;
-    border-radius: 0.3rem;
-}
-
-#rowEditTopic {
-    background-color: rgb(255, 255, 255, .1);
-    margin: 5px;
-    padding: 2px;
-    border-radius: 0.3rem;
-}
-
-#rowAddPost {
-    background-color: rgb(255, 255, 255, .1);
-    margin: 5px;
-    padding: 2px;
-    border-radius: 0.3rem;
-}
-
-#rowAddSection {
-    background-color: rgb(255, 255, 255, .1);
-    margin: 5px;
-    padding: 2px;
-    border-radius: 0.3rem;
-}
-
-#rowEditSection {
-    background-color: rgb(255, 255, 255, .1);
-    margin: 5px;
-    padding: 2px;
-    border-radius: 0.3rem;
-}
-
-#rowEditPost {
-    background-color: rgb(255, 255, 255, .1);
-    margin: 5px;
-    padding: 2px;
-    border-radius: 0.3rem;
-}
-
-#categorySection {
-   background-color: rgb(255, 255, 255, .1);
-   margin: 5px;
-   padding: 2px;
-   border-radius: 0.3rem;
-}
-
-#button, #button2, #button3, #button4, #button5, #button6, #button7 {
+#button, #button2, #button3, #button4, #button5, #button6, #button7, #button8 {
     	font-size: 1.5rem;
     	color: white;
         border: 2px;
@@ -156,11 +98,11 @@ h4 {
         background-color:#364866;
         outline:none;
 }
-#button:hover, #button2:hover, #button3:hover, #button4:hover, #button5:hover, #button6:hover, #button7:hover {
+#button:hover, #button2:hover, #button3:hover, #button4:hover, #button5:hover, #button6:hover, #button7:hover, #button8:hover {
         background-color:#12223d;
 }
 
-.col-sm, .col-sm-2 {
+.col-sm, .col-sm-2, .col-sm-7, .col-xs, .col-sm-3, .col-sm-4 {
     font-family: Arial, "Arial CE", "Helvetica CE", sans-serif;
    	font-size: 12px;
    	font-weight: bold;
@@ -174,34 +116,27 @@ h4 {
 	font-size: 24px;
 	height: 150px;
 	margin: 5px;
-	position: relative; left: 130px;
-	background-color: rgb(0, 0, 0, .5);
+	background-color: rgb(0, 0, 0, .4);
 	color: white;
 	text-align: left;
 	border-radius: 0.3rem;
     padding:0rem;
+    border-style:solid;
+    border-color:gray;
+    border-width:0.05rem;
 }
 
-#marginRow {
-    margin-top: 5px;
+#sectionIndex:hover{
+background-color: rgb(0, 0, 0, .6);
 }
 
-#marginRow2 {
-    margin-top: 5px;
-}
-
-#marginRow3 {
-    margin-top: 5px;
-}
-
-#marginRow4 {
+#marginRow, #marginRow2, #marginRow3, #marginRow4 {
     margin-top: 5px;
 }
 
 #categoryIndex {
 	font-family: Arial, "Arial CE", "Helvetica CE", sans-serif;
 	font-size: 28px;
-	position: relative; left: 150px;
 	font-weight: bold;
 	margin: 0px;
 	color: white;
@@ -211,7 +146,6 @@ h4 {
 #categoryIndex2 {
 	font-family: Arial, "Arial CE", "Helvetica CE", sans-serif;
 	font-size: 20px;
-	position: relative; left: 150px;
 	font-weight: bold;
 	margin: 0px;
 	color: white;
@@ -221,21 +155,18 @@ h4 {
 #categoryIndex3 {
 	font-family: Arial, "Arial CE", "Helvetica CE", sans-serif;
 	font-size: 20px;
-	position: relative; left: 150px;
 	font-weight: bold;
 	margin: 0px;
 	color: white;
 	text-align: left;
 }
 
-/* Tooltip container */
 .mytooltip {
     position: relative;
     display: inline-block;
     color:red;
 }
 
-/* Tooltip text */
 .mytooltip .mytooltiptext {
     visibility: hidden;
     width: 150px;
@@ -247,13 +178,10 @@ h4 {
     text-align: center;
     padding: 5px 15px;
     border-radius: 6px;
-
-    /* Position the tooltip text */
     position: absolute;
     z-index: 1;
 }
 
-/* Show the tooltip text when you mouse over the tooltip container */
 .mytooltip:hover .mytooltiptext {
     visibility: visible;
 }
@@ -344,12 +272,10 @@ body {
 #footer {
    position:absolute;
    bottom:0;
-   height:30px;   /* Height of the footer */
    background-color: rgba(0, 0, 0, 0.3);
    text-align: center;
 }
 
-/* Register and Login */
 input[type=text],
 input[type=password]{
     width:100%;
