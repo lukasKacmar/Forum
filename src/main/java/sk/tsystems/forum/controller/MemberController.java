@@ -75,7 +75,7 @@ public class MemberController {
                 invalidForm = true;
                 model.addAttribute("passwordMessage", "Invalid Password!");
             }
-            else if (member.validatePassword()) {
+            else if (!member.validatePassword()) {
                 invalidForm = true;
                 model.addAttribute("passwordMessage", "Password doesn't match!");
             }
