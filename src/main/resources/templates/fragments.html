@@ -87,10 +87,10 @@
                     <div class="col-sm-3 " id="sectionIndex" th:each="section: ${category.getSections()}">
                         <a th:href='${"/section?id="+section.id}'>
                             <div style="width:175px; height:150px;">
-                                <span style="color:white; font-size:1.2rem; position:relative;left:8px;top:8px;"
-                                      th:text="${section.name}"></span>
-                                <br/>
-                                <div style="color:white;font-weight: normal;line-height:20px; font-size:small; position: relative;left:8px;top:8px; "
+                                <div style="color:white; font-size:1.2rem; position:relative;left:8px;top:8px;"
+                                      th:text="${section.name}"></div>
+
+                                <div style="color:white;margin-top:7px;font-weight: normal;line-height:20px; font-size:small; position: relative;left:8px;top:8px; "
                                      th:text="${section.description}"></div>
                             </div>
                         </a>
@@ -195,6 +195,10 @@
 
             <div class="col-sm">
                 <span><img style="width:30px;height:30px;" src="images\reply.png"/></span>
+                <a class="mytooltip">
+                <span><img style="width:30px;height:30px;" src="images\reply.png"></img> </span>
+                    <span class="mytooltiptext">REPLIES</span>
+                </a>
                 <span style="font-size:medium;" th:text="${@ps.getCount(topic)}"> </span>
             </div>
             <div class="col-sm-2">
