@@ -59,21 +59,28 @@
 
     <div style="padding-left:210px;" class="container">
         <div class="row" th:each="category: ${@ss.getCategories()}">
-            <span id="categoryIndex" th:text="${category.name}"></span>
 
-            <span th:if="${@memberController.admin}" style="margin-left:10px;" id="categoryIndex2">
+            <div class="col-sm-8">
+                <span id="categoryIndex" th:text="${category.name}"></span>
+            </div>
+
+            <div class="col-xs">
+                <span th:if="${@memberController.admin}" style="margin-left:10px;" id="categoryIndex2">
                 <a class="mytooltip" th:href='${"/category?id="+category.id}' style="color:white;">
                     <img style="width:30px;height:30px;" src="images\manage.png"></img>
                     <span class="mytooltiptext">MANAGE THIS CATEGORY</span>
                 </a>
-            </span>
+                </span>
+            </div>
 
-            <span th:if="${@memberController.admin}" style="margin-left:10px;" id="categoryIndex3">
+            <div class="col-xs">
+                <span th:if="${@memberController.admin}" style="margin-left:10px;" id="categoryIndex3">
                 <a class="mytooltip" th:href='${"/deletecategory?id="+category.id}' style="color:white;">
                     <img style="width:30px;height:30px;" src="images\bin.png"></img>
                     <span class="mytooltiptext">DELETE CATEGORY</span>
                 </a>
-            </span>
+                </span>
+            </div>
 
             <div class="container">
                 <div class="row">

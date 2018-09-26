@@ -13,7 +13,6 @@
 	margin: 0px 0px 10px 0px;
 }
 
-
 #header {
     background: url('../images/ocean.jpg');
     background-size: cover;
@@ -138,21 +137,12 @@ background-color: rgb(0, 0, 0, .6);
 	font-family: Arial, "Arial CE", "Helvetica CE", sans-serif;
 	font-size: 28px;
 	font-weight: bold;
-	margin: 0px;
+	margin-left: -15px;
 	color: white;
 	text-align: left;
 }
 
-#categoryIndex2 {
-	font-family: Arial, "Arial CE", "Helvetica CE", sans-serif;
-	font-size: 20px;
-	font-weight: bold;
-	margin: 0px;
-	color: white;
-	text-align: left;
-}
-
-#categoryIndex3 {
+#categoryIndex2, #categoryIndex3 {
 	font-family: Arial, "Arial CE", "Helvetica CE", sans-serif;
 	font-size: 20px;
 	font-weight: bold;
@@ -301,7 +291,6 @@ hr {
 
 .main-login{
  	background-color: #fff;
-    /* shadows and rounded borders */
     moz-border-radius: 2px;
     webkit-border-radius: 2px;
     border-radius: 2px;
