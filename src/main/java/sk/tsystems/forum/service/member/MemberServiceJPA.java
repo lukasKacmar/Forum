@@ -11,10 +11,6 @@ import java.util.List;
 @Transactional
 public class MemberServiceJPA implements MemberService {
 
-    // todo header
-    // todo footer
-    // todo search
-
     @PersistenceContext
     private EntityManager em;
 
@@ -65,10 +61,16 @@ public class MemberServiceJPA implements MemberService {
 
     @Override
     public void deleteMember(long id) {
-        Member m = em
-                .createQuery("SELECT m FROM Member m WHERE m.id = :id", Member.class)
-                .setParameter("id", id)
-                .getSingleResult();
+        Member m = null;
+        try {
+            m = em
+                    .createQuery("SELECT m FROM Member m WHERE m.id = :id", Member.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (NoResultException ex) {
+            ex.printStackTrace();
+        }
+
         if(m != null) {
             em.remove(m);
         }

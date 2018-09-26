@@ -8,14 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
 import sk.tsystems.forum.entity.Member;
-import sk.tsystems.forum.entity.Post;
 import sk.tsystems.forum.entity.Rank;
-import sk.tsystems.forum.entity.Section;
 import sk.tsystems.forum.service.member.MemberService;
-import sk.tsystems.forum.service.post.PostService;
-import sk.tsystems.forum.service.post.PostServiceJPA;
-
-import java.util.List;
 
 @Controller
 @Scope(WebApplicationContext.SCOPE_SESSION)

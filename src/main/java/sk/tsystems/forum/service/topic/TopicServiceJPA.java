@@ -26,7 +26,11 @@ public class TopicServiceJPA implements TopicService {
 
     @Override
     public void updateTopic(Topic topic) {
-        em.merge(topic);
+        try {
+            em.merge(topic);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
@@ -55,10 +59,14 @@ public class TopicServiceJPA implements TopicService {
 
     @Override
     public List<Topic> findTopics(String searchText) {
-        return em
-                .createQuery("SELECT t FROM Topic t WHERE t.title LIKE :searchText")
-                .setParameter("searchText", "%" + searchText + "%")
-                .getResultList();
+        try {
+            return em
+                    .createQuery("SELECT t FROM Topic t WHERE t.title LIKE :searchText")
+                    .setParameter("searchText", "%" + searchText + "%")
+                    .getResultList();
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
     @Override
@@ -76,10 +84,16 @@ public class TopicServiceJPA implements TopicService {
     @Override
     public void deleteTopic(long id) {
         Topic t = null;
-        t = em
-                .createQuery("SELECT t FROM Topic t WHERE t.id = :id", Topic.class)
-                .setParameter("id", id)
-                .getSingleResult();
+
+        try {
+            t = em
+                    .createQuery("SELECT t FROM Topic t WHERE t.id = :id", Topic.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (NoResultException ex) {
+            ex.printStackTrace();
+        }
+
         if(t != null) {
             em.remove(t);
         }

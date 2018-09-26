@@ -59,10 +59,17 @@ public class PostServiceJPA implements PostService {
 
     @Override
     public long getCount(Topic topic) {
-        long replies = ((long) em
-                .createQuery("SELECT COUNT(*) FROM Post p WHERE p.topic = :topic")
-                .setParameter("topic", topic)
-                .getSingleResult());
+        long replies = 0;
+
+        try {
+            replies = ((long) em
+                    .createQuery("SELECT COUNT(*) FROM Post p WHERE p.topic = :topic")
+                    .setParameter("topic", topic)
+                    .getSingleResult());
+        } catch (NoResultException ex) {
+            ex.printStackTrace();
+        }
+
         if (replies == 0) {
             return 0;
         } else {
@@ -72,16 +79,26 @@ public class PostServiceJPA implements PostService {
 
     @Override
     public void updatePost(Post post) {
-        em.merge(post);
+        try {
+            em.merge(post);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
     public void deletePost(long id) {
         Post p = null;
-        p = em
-                .createQuery("SELECT p FROM Post p WHERE p.id = :id", Post.class)
-                .setParameter("id", id)
-                .getSingleResult();
+
+        try {
+            p = em
+                    .createQuery("SELECT p FROM Post p WHERE p.id = :id", Post.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (NoResultException ex) {
+            ex.printStackTrace();
+        }
+
         if (p != null) {
             em.remove(p);
         }
@@ -89,16 +106,27 @@ public class PostServiceJPA implements PostService {
 
     @Override
     public void likePost(Like like) {
-        em.persist(like);
+        try {
+            em.persist(like);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
     public void unlikePost(Post post, Member member) {
-        Like l = em
-                .createQuery("SELECT l FROM Like l WHERE l.post = :post AND l.member = :member", Like.class)
-                .setParameter("post", post)
-                .setParameter("member", member)
-                .getSingleResult();
+        Like l = null;
+
+        try {
+            l = em
+                    .createQuery("SELECT l FROM Like l WHERE l.post = :post AND l.member = :member", Like.class)
+                    .setParameter("post", post)
+                    .setParameter("member", member)
+                    .getSingleResult();
+        } catch (NoResultException ex) {
+            ex.printStackTrace();
+        }
+
         if (l != null) {
             em.remove(l);
         }
@@ -119,17 +147,25 @@ public class PostServiceJPA implements PostService {
 
     @Override
     public long getLikesCount(Post post) {
-        return ((long) em
-                .createQuery("SELECT COUNT(*) FROM Like l WHERE l.post = :post")
-                .setParameter("post", post)
-                .getSingleResult());
+        try {
+            return ((long) em
+                    .createQuery("SELECT COUNT(*) FROM Like l WHERE l.post = :post")
+                    .setParameter("post", post)
+                    .getSingleResult());
+        } catch (NoResultException ex) {
+            return 0;
+        }
     }
 
     @Override
     public List<Post> findPosts(String searchText) {
-        return em
-                .createQuery("SELECT p FROM Post p WHERE p.content LIKE :searchText")
-                .setParameter("searchText", "%" + searchText + "%")
-                .getResultList();
+        try {
+            return em
+                    .createQuery("SELECT p FROM Post p WHERE p.content LIKE :searchText")
+                    .setParameter("searchText", "%" + searchText + "%")
+                    .getResultList();
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 }

@@ -1,6 +1,5 @@
 package sk.tsystems.forum.entity;
 
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;

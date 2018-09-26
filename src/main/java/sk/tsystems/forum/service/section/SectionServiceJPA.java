@@ -26,7 +26,11 @@ public class SectionServiceJPA implements SectionService {
 
     @Override
     public void updateSection(Section section) {
-        em.merge(section);
+        try {
+            em.merge(section);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
@@ -67,10 +71,17 @@ public class SectionServiceJPA implements SectionService {
 
     @Override
     public void deleteSection(long id) {
-        Section s = em
-                .createQuery("SELECT s FROM Section s WHERE s.id = :id", Section.class)
-                .setParameter("id", id)
-                .getSingleResult();
+        Section s = null;
+
+        try {
+            s = em
+                    .createQuery("SELECT s FROM Section s WHERE s.id = :id", Section.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (NoResultException ex) {
+            ex.printStackTrace();
+        }
+
         if(s != null){
             em.remove(s);
         }
@@ -111,10 +122,16 @@ public class SectionServiceJPA implements SectionService {
     @Override
     public void deleteCategory(long id) {
         Category c = null;
-        c = em
-                .createQuery("SELECT c FROM Category c WHERE c.id = :id", Category.class)
-                .setParameter("id", id)
-                .getSingleResult();
+
+        try {
+            c = em
+                    .createQuery("SELECT c FROM Category c WHERE c.id = :id", Category.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (NoResultException ex) {
+            ex.printStackTrace();
+        }
+
         if(c != null){
             em.remove(c);
         }

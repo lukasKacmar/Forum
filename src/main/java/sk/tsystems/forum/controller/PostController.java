@@ -80,7 +80,6 @@ public class PostController {
         return "search";
     }
 
-
     public boolean isMembersPost(long id){
         return mc.isAdmin() || (mc.getLoggedMember() != null && mc.getLoggedMember().getId() == id);
     }
