@@ -71,6 +71,10 @@ public class Member implements Serializable {
         this.password = password;
     }
 
+    public void setRepeatPassword(String repeatPassword) {
+        this.repeatPassword = repeatPassword;
+    }
+
     public Rank getRank() {
         return rank;
     }
